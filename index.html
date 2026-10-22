@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Telegram Business — NFT Deals</title>
+    <title>@steknft</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --tg-bg: #0e1621;
-            --tg-secondary-bg: #17212b;
-            --tg-card: rgba(29, 39, 51, 0.68);
-            --tg-border: rgba(255, 255, 255, 0.09);
-            --tg-highlight: rgba(255, 255, 255, 0.22);
-            --tg-blue: #2ea6ff;
-            --tg-green: #00c853;
-            --text: #f5f5f5;
-            --subtext: #7f91a4;
+            --bg: #050505;
+            --card-bg: rgba(255, 255, 255, 0.045);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --card-highlight: rgba(255, 255, 255, 0.22);
+            --input-bg: rgba(255, 255, 255, 0.04);
+            --text: #ffffff;
+            --subtext: #88888e;
+            --accent: #ffffff;
+            --accent-text: #000000;
         }
 
         * {
@@ -28,55 +28,69 @@
         }
 
         body {
-            background-color: var(--tg-bg);
+            background-color: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            padding: 16px 16px 115px 16px;
+            padding: 14px 16px 110px 16px;
             overflow-x: hidden;
-            position: relative;
         }
 
-        .ambient-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 0%, #1c2938 0%, #0e1621 75%);
-            overflow: hidden;
+        /* Верхний минималистичный бар @steknft */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            background: var(--card-bg);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid var(--card-border);
+            border-top-color: var(--card-highlight);
+            border-radius: 18px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.15s ease;
         }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(75px);
-            opacity: 0.4;
+        .top-bar:active {
+            transform: scale(0.98);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .orb-1 { width: 240px; height: 240px; background: #2ea6ff; top: -60px; right: -40px; }
-        .orb-2 { width: 220px; height: 220px; background: #766ac8; bottom: 80px; left: -50px; }
+        .top-bar span {
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: var(--text);
+        }
 
+        /* Переключение вкладок */
         .tab-view {
             display: none;
-            animation: fadeIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+            animation: fade 0.2s ease;
         }
 
-        .tab-view.active { display: block; }
+        .tab-view.active {
+            display: block;
+        }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+        @keyframes fade {
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Стеклянные карточки (Monochrome Liquid Glass) */
         .glass-card {
             position: relative;
-            background: var(--tg-card);
-            backdrop-filter: blur(26px) saturate(170%);
-            -webkit-backdrop-filter: blur(26px) saturate(170%);
-            border: 1px solid var(--tg-border);
-            border-top-color: var(--tg-highlight);
+            background: var(--card-bg);
+            backdrop-filter: blur(30px) saturate(120%);
+            -webkit-backdrop-filter: blur(30px) saturate(120%);
+            border: 1px solid var(--card-border);
+            border-top-color: var(--card-highlight);
             border-radius: 22px;
             padding: 16px;
             margin-bottom: 14px;
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             overflow: hidden;
         }
 
@@ -84,73 +98,20 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(250px circle at var(--mx, 50%) var(--my, 0%), rgba(46, 166, 255, 0.12), transparent 60%);
+            background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.07), transparent 60%);
             pointer-events: none;
         }
 
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .user-title { font-size: 18px; font-weight: 700; color: #fff; }
-        .user-sub { font-size: 13px; color: var(--subtext); margin-top: 2px; }
-
-        .status-pill {
-            background: rgba(46, 166, 255, 0.14);
-            color: var(--tg-blue);
-            border: 1px solid rgba(46, 166, 255, 0.32);
-            padding: 6px 12px;
-            border-radius: 99px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
         .section-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
             color: var(--subtext);
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        /* ================= ПУНКТ 3: ЧИПЫ БЫСТРЫХ ПРЕСЕТОВ КОЛЛЕКЦИЙ ================= */
-        .presets-scroll {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-            scrollbar-width: none;
-        }
-
-        .presets-scroll::-webkit-scrollbar { display: none; }
-
-        .preset-chip {
-            flex: 0 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(14, 22, 33, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top-color: rgba(255, 255, 255, 0.2);
-            padding: 7px 12px;
-            border-radius: 99px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.18s ease;
-        }
-
-        .preset-chip:active {
-            transform: scale(0.94);
-            background: rgba(46, 166, 255, 0.22);
-            border-color: var(--tg-blue);
         }
 
         /* Поля ввода */
@@ -161,57 +122,58 @@
             margin-bottom: 10px;
         }
 
-        .glass-input-wrap:last-child { margin-bottom: 0; }
+        .glass-input-wrap:last-child {
+            margin-bottom: 0;
+        }
 
         .prefix {
             position: absolute;
             left: 14px;
-            color: var(--tg-blue);
+            color: var(--subtext);
             font-weight: 600;
             pointer-events: none;
         }
 
         .glass-input {
             width: 100%;
-            background: rgba(14, 22, 33, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #fff;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            color: var(--text);
             padding: 13px 14px;
-            border-radius: 15px;
+            border-radius: 14px;
             font-size: 15px;
             outline: none;
             transition: border-color 0.2s, background 0.2s;
             user-select: text;
         }
 
-        .glass-input::placeholder { color: var(--subtext); }
-        .glass-input.has-prefix { padding-left: 32px; }
+        .glass-input::placeholder {
+            color: #55555a;
+        }
+
+        .glass-input.has-prefix {
+            padding-left: 32px;
+        }
+
         .glass-input:focus {
-            border-color: var(--tg-blue);
-            background: rgba(14, 22, 33, 0.9);
+            border-color: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.07);
         }
 
-        .cmd-preview {
-            background: rgba(14, 22, 33, 0.7);
-            border: 1px dashed rgba(46, 166, 255, 0.3);
-            padding: 12px;
-            border-radius: 14px;
-            font-family: monospace;
-            font-size: 13px;
-            color: var(--tg-blue);
-            margin-top: 12px;
-            word-break: break-all;
+        .hint {
+            font-size: 12px;
+            color: var(--subtext);
+            margin-top: 8px;
+            line-height: 1.4;
         }
 
-        .hint { font-size: 12px; color: var(--subtext); margin-top: 8px; line-height: 1.4; }
-
-        /* Стеклянные переключатели */
+        /* ================= LIQUID GLASS ПЕРЕКЛЮЧАТЕЛИ ================= */
         .liquid-track {
             position: relative;
             display: grid;
-            background: rgba(14, 22, 33, 0.75);
+            background: rgba(0, 0, 0, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
+            border-radius: 15px;
             padding: 4px;
             height: 46px;
             touch-action: none;
@@ -226,13 +188,13 @@
             top: 4px;
             bottom: 4px;
             left: 4px;
-            background: linear-gradient(135deg, rgba(46, 166, 255, 0.28) 0%, rgba(118, 106, 200, 0.22) 100%);
+            background: rgba(255, 255, 255, 0.16);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(46, 166, 255, 0.45);
-            border-radius: 12px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), scale 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.32);
+            border-radius: 11px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), scale 0.18s ease;
             pointer-events: none;
             z-index: 1;
         }
@@ -240,6 +202,7 @@
         .liquid-track.dragging .liquid-thumb {
             transition: scale 0.15s ease;
             transform: translateX(var(--drag-x, 0px)) scale(1.03);
+            background: rgba(255, 255, 255, 0.22);
         }
 
         .liquid-option {
@@ -255,223 +218,131 @@
             transition: color 0.2s;
         }
 
-        .liquid-option.active { color: #ffffff; }
+        .liquid-option.active {
+            color: #ffffff;
+        }
 
-        /* Список бизнес-чатов и сделок */
+        /* ================= СПИСОК ВСЕХ ЛИЧНЫХ ЧАТОВ ================= */
         .chats-vertical-list {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 220px;
+            max-height: 290px;
             overflow-y: auto;
             padding-right: 2px;
+        }
+
+        .chats-vertical-list::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .chats-vertical-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 99px;
         }
 
         .chat-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(14, 22, 33, 0.55);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.07);
             padding: 11px 14px;
-            border-radius: 16px;
+            border-radius: 15px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.18s ease;
         }
 
         .chat-row.selected {
-            background: linear-gradient(135deg, rgba(46, 166, 255, 0.2), rgba(118, 106, 200, 0.15));
-            border-color: rgba(46, 166, 255, 0.55);
-            box-shadow: 0 4px 16px rgba(46, 166, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.45);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
         }
 
-        .chat-row-left { display: flex; align-items: center; gap: 12px; }
+        .chat-row-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
         .chat-avatar {
             width: 38px;
             height: 38px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #2ea6ff, #5856d6);
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 15px;
             color: #fff;
         }
 
-        .chat-title { font-size: 14px; font-weight: 600; color: #fff; }
-        .chat-user { font-size: 12px; color: var(--subtext); margin-top: 2px; }
+        .chat-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .chat-user {
+            font-size: 12px;
+            color: var(--subtext);
+            margin-top: 2px;
+        }
 
         .chat-radio {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            border: 2px solid var(--subtext);
+            border: 1.5px solid var(--subtext);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .chat-row.selected .chat-radio {
-            border-color: var(--tg-blue);
-            background: var(--tg-blue);
+            border-color: #ffffff;
+            background: #ffffff;
         }
 
         .chat-row.selected .chat-radio::after {
             content: "";
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
-            background: #fff;
-        }
-
-        .deal-pill {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 99px;
-            background: rgba(46, 166, 255, 0.15);
-            color: var(--tg-blue);
-            border: 1px solid rgba(46, 166, 255, 0.3);
-        }
-
-        .deal-pill.completed {
-            background: rgba(0, 200, 83, 0.15);
-            color: #00e676;
-            border-color: rgba(0, 200, 83, 0.3);
+            background: #000000;
         }
 
         .empty-chats {
             font-size: 13px;
             color: var(--subtext);
             text-align: center;
-            padding: 14px 10px;
+            padding: 18px 10px;
             line-height: 1.45;
         }
 
-        .btn-glass {
+        /* Кнопка в строгом белом/стеклянном стиле */
+        .btn-main {
             width: 100%;
-            background: linear-gradient(135deg, rgba(46, 166, 255, 0.85), rgba(30, 136, 229, 0.75));
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            color: #fff;
+            background: #ffffff;
+            color: #000000;
+            border: none;
             padding: 14px;
             border-radius: 16px;
             font-size: 15px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(46, 166, 255, 0.28), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            transition: transform 0.15s ease;
-            margin-top: 10px;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            margin-top: 12px;
         }
 
-        .btn-glass:active { transform: scale(0.97); }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.12);
-            color: var(--text);
-            box-shadow: none;
-            font-size: 14px;
-            padding: 12px;
+        .btn-main:active {
+            transform: scale(0.98);
+            opacity: 0.9;
         }
 
-        /* ================= ПУНКТ 5: СТЕКЛЯННЫЙ ЧЕК СДЕЛКИ (LIQUID MODAL RECEIPT) ================= */
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(6, 10, 15, 0.65);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 200;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.28s ease;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-        }
-
-        .modal-backdrop.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .receipt-sheet {
-            width: 100%;
-            max-width: 420px;
-            background: rgba(23, 33, 43, 0.82);
-            backdrop-filter: blur(34px) saturate(190%);
-            -webkit-backdrop-filter: blur(34px) saturate(190%);
-            border-top: 1px solid rgba(255, 255, 255, 0.28);
-            border-radius: 28px 28px 0 0;
-            padding: 14px 20px 28px 20px;
-            box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.25);
-            transform: translateY(100%);
-            transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .modal-backdrop.open .receipt-sheet {
-            transform: translateY(0);
-        }
-
-        .sheet-handle {
-            width: 42px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.22);
-            border-radius: 99px;
-            margin: 0 auto 16px auto;
-        }
-
-        .receipt-badge-top {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(46, 166, 255, 0.14);
-            border: 1px solid rgba(46, 166, 255, 0.35);
-            color: var(--tg-blue);
-            font-size: 11px;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 99px;
-            margin-bottom: 10px;
-        }
-
-        .receipt-amount {
-            font-size: 28px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-
-        .receipt-gift-name {
-            font-size: 14px;
-            color: var(--subtext);
-            margin-bottom: 16px;
-        }
-
-        .receipt-table {
-            background: rgba(14, 22, 33, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 12px 14px;
-            margin-bottom: 16px;
-        }
-
-        .receipt-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 13px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .receipt-row:last-child { border-bottom: none; }
-        .receipt-row span:first-child { color: var(--subtext); }
-        .receipt-row span:last-child { color: #fff; font-weight: 600; }
-
-        /* Нижний док */
+        /* ================= НИЖНИЙ ДОК (МОНОХРОМНОЕ СТЕКЛО) ================= */
         .bottom-dock-wrap {
             position: fixed;
             bottom: 16px;
@@ -485,18 +356,18 @@
         .bottom-dock {
             position: relative;
             width: 100%;
-            max-width: 380px;
-            height: 70px;
-            background: rgba(25, 34, 45, 0.78);
-            backdrop-filter: blur(30px) saturate(190%);
-            -webkit-backdrop-filter: blur(30px) saturate(190%);
-            border: 1px solid rgba(255, 255, 255, 0.13);
-            border-top-color: rgba(255, 255, 255, 0.26);
+            max-width: 360px;
+            height: 66px;
+            background: rgba(18, 18, 20, 0.82);
+            backdrop-filter: blur(32px) saturate(140%);
+            -webkit-backdrop-filter: blur(32px) saturate(140%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-top-color: rgba(255, 255, 255, 0.24);
             border-radius: 999px;
             padding: 5px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.18);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.14);
             touch-action: none;
             overflow: hidden;
         }
@@ -506,14 +377,14 @@
             top: 5px;
             bottom: 5px;
             left: 5px;
-            background: radial-gradient(circle at 50% 35%, rgba(46, 166, 255, 0.22), rgba(120, 88, 225, 0.28) 70%, rgba(255, 255, 255, 0.08) 100%);
-            backdrop-filter: blur(18px) brightness(1.18);
-            -webkit-backdrop-filter: blur(18px) brightness(1.18);
-            border: 1px solid rgba(138, 180, 248, 0.35);
+            background: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.28);
             border-top-color: rgba(255, 255, 255, 0.45);
             border-radius: 999px;
-            box-shadow: 0 0 22px rgba(46, 166, 255, 0.25), inset 0 1px 3px rgba(255, 255, 255, 0.4);
-            transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), scale 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), scale 0.2s ease;
             pointer-events: none;
             z-index: 1;
         }
@@ -532,55 +403,60 @@
             justify-content: center;
             gap: 3px;
             cursor: pointer;
-            color: #ffffff;
-            opacity: 0.78;
-            transition: color 0.25s, opacity 0.25s;
+            color: var(--subtext);
+            transition: color 0.2s;
         }
 
-        .dock-tab.active { color: var(--tg-blue); opacity: 1; }
-        .dock-icon-wrap { position: relative; display: flex; align-items: center; justify-content: center; height: 26px; }
-        .dock-icon { width: 24px; height: 24px; fill: currentColor; transition: transform 0.25s ease; }
-        .dock-tab.active .dock-icon { transform: scale(1.06); }
+        .dock-tab.active {
+            color: #ffffff;
+        }
+
+        .dock-icon-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 24px;
+        }
+
+        .dock-icon {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
 
         .dock-badge {
             position: absolute;
             top: -4px;
             right: -12px;
-            background: var(--tg-blue);
-            color: #fff;
+            background: #ffffff;
+            color: #000000;
             font-size: 10px;
             font-weight: 700;
             padding: 1px 5px;
             border-radius: 99px;
-            border: 1.5px solid #19222d;
-            min-width: 18px;
+            min-width: 17px;
             text-align: center;
         }
 
-        .dock-label { font-size: 11px; font-weight: 600; }
+        .dock-label {
+            font-size: 11px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
 
-    <div class="ambient-bg">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-    </div>
-
-    <!-- Шапка профиля -->
-    <div class="glass-card header">
-        <div>
-            <div class="user-title" id="userName">NFT Deals</div>
-            <div class="user-sub" id="userId">Telegram Business</div>
-        </div>
-        <div class="status-pill">Business Active</div>
+    <!-- Верхняя минималистичная плашка @steknft -->
+    <div class="top-bar" onclick="openChannel()">
+        <span>@steknft</span>
     </div>
 
     <!-- ================= ВКЛАДКА 1: НАСТРОЙКИ (НАЧАЛЬНОЕ МЕНЮ) ================= -->
     <div id="view-settings" class="tab-view active">
 
         <div class="glass-card">
-            <div class="section-label">🎁 Аккаунт для получения подарков</div>
+            <div class="section-label">Аккаунт для получения подарков</div>
             <div class="glass-input-wrap">
                 <span class="prefix">@</span>
                 <input type="text" id="receiverInput" class="glass-input has-prefix" placeholder="username">
@@ -589,127 +465,51 @@
         </div>
 
         <div class="glass-card">
-            <div class="section-label">🌐 Язык карточек оффера</div>
+            <div class="section-label">Язык карточек оффера</div>
             <div class="liquid-track cols-2" id="langSwitch" data-value="ru">
                 <div class="liquid-thumb"></div>
-                <div class="liquid-option active" data-val="ru">🇷🇺 Русский</div>
-                <div class="liquid-option" data-val="en">🇬🇧 English</div>
+                <div class="liquid-option active" data-val="ru">Русский</div>
+                <div class="liquid-option" data-val="en">English</div>
             </div>
         </div>
 
-        <!-- Быстрый конструктор с ЧИПАМИ КОЛЛЕКЦИЙ (Пункт 3) -->
-        <div class="glass-card">
-            <div class="section-label">⚡ Конструктор команды</div>
-            <div class="presets-scroll">
-                <div class="preset-chip" onclick="applyPreset('settingsNftUrl', 'DurovsCap')">🧢 Durov's Cap</div>
-                <div class="preset-chip" onclick="applyPreset('settingsNftUrl', 'PlushPepe')">🐸 Plush Pepe</div>
-                <div class="preset-chip" onclick="applyPreset('settingsNftUrl', 'LibertyFigure')">🗽 Liberty Figure</div>
-                <div class="preset-chip" onclick="applyPreset('settingsNftUrl', 'AstralShard')">💎 Astral Shard</div>
-                <div class="preset-chip" onclick="applyPreset('settingsNftUrl', 'SignetRing')">💍 Signet Ring</div>
-                <div class="preset-chip" onclick="applyPreset('settingsNftUrl', 'HomemadeCake')">🎂 Cake</div>
-            </div>
-
-            <div class="glass-input-wrap">
-                <input type="text" id="settingsNftUrl" class="glass-input" placeholder="https://t.me/nft/DurovsCap-1234" oninput="updateCmdPreview()">
-            </div>
-            <div class="glass-input-wrap" style="margin-bottom: 12px;">
-                <input type="number" id="settingsNftPrice" class="glass-input" placeholder="Сумма (500)" value="500" oninput="updateCmdPreview()">
-            </div>
-
-            <div class="liquid-track cols-3" id="settingsCurrSwitch" data-value="star">
-                <div class="liquid-thumb"></div>
-                <div class="liquid-option active" data-val="star">⭐ Stars</div>
-                <div class="liquid-option" data-val="gram">💎 GRAM</div>
-                <div class="liquid-option" data-val="usdt">💵 USDT</div>
-            </div>
-
-            <div class="cmd-preview" id="cmdBox">!создать https://t.me/nft/DurovsCap-1234 500 star</div>
-            <button class="btn-glass btn-secondary" onclick="copyCommand()">📋 Скопировать команду</button>
-        </div>
-
-        <button class="btn-glass" onclick="saveSettings()">💾 Сохранить настройки в боте</button>
+        <button class="btn-main" onclick="saveSettings()">Сохранить настройки</button>
     </div>
 
-    <!-- ================= ВКЛАДКА 2: ЧАТЫ И ЧЕКИ СДЕЛОК ================= -->
+    <!-- ================= ВКЛАДКА 2: ЧАТЫ ================= -->
     <div id="view-chats" class="tab-view">
 
         <div class="glass-card">
             <div class="section-label">
-                <span>💬 Ваши бизнес-чаты</span>
-                <span id="selectedChatBadge" style="color: var(--tg-blue);">Не выбран</span>
+                <span>Личные чаты</span>
+                <span id="selectedChatBadge" style="color: #fff;">Не выбран</span>
             </div>
+
+            <!-- Поиск по всем личным чатам -->
+            <div class="glass-input-wrap" style="margin-bottom: 12px;">
+                <input type="text" id="chatSearchInput" class="glass-input" placeholder="Поиск по имени, @username или ID..." oninput="filterChats()">
+            </div>
+
             <div class="chats-vertical-list" id="chatsContainer"></div>
         </div>
 
         <div class="glass-card">
-            <div class="section-label">🚀 Отправить оффер напрямую</div>
-            <!-- Чипы пресетов коллекций и во вкладке чатов -->
-            <div class="presets-scroll">
-                <div class="preset-chip" onclick="applyPreset('chatNftUrl', 'DurovsCap')">🧢 Durov's Cap</div>
-                <div class="preset-chip" onclick="applyPreset('chatNftUrl', 'PlushPepe')">🐸 Plush Pepe</div>
-                <div class="preset-chip" onclick="applyPreset('chatNftUrl', 'LibertyFigure')">🗽 Liberty Figure</div>
-                <div class="preset-chip" onclick="applyPreset('chatNftUrl', 'AstralShard')">💎 Astral Shard</div>
-                <div class="preset-chip" onclick="applyPreset('chatNftUrl', 'SignetRing')">💍 Signet Ring</div>
-            </div>
-
+            <div class="section-label">Отправить оффер</div>
             <div class="glass-input-wrap">
-                <input type="text" id="chatNftUrl" class="glass-input" placeholder="Ссылка: https://t.me/nft/DurovsCap-1234">
+                <input type="text" id="chatNftUrl" class="glass-input" placeholder="Ссылка: https://t.me/nft/...">
             </div>
             <div class="glass-input-wrap" style="margin-bottom: 12px;">
-                <input type="number" id="chatNftPrice" class="glass-input" placeholder="Сумма (например, 500)" value="500">
+                <input type="number" id="chatNftPrice" class="glass-input" placeholder="Сумма" value="500">
             </div>
 
             <div class="liquid-track cols-3" id="chatCurrSwitch" data-value="star">
                 <div class="liquid-thumb"></div>
-                <div class="liquid-option active" data-val="star">⭐ Stars</div>
-                <div class="liquid-option" data-val="gram">💎 GRAM</div>
-                <div class="liquid-option" data-val="usdt">💵 USDT</div>
+                <div class="liquid-option active" data-val="star">Stars</div>
+                <div class="liquid-option" data-val="gram">GRAM</div>
+                <div class="liquid-option" data-val="usdt">USDT</div>
             </div>
 
-            <button class="btn-glass" onclick="sendOfferDirect()">✈️ Отправить оффер в выбранный чат</button>
-        </div>
-
-        <!-- ПУНКТ 5: ИСТОРИЯ СДЕЛОК И ОТКРЫТИЕ СТЕКЛЯННОГО ЧЕКА -->
-        <div class="glass-card">
-            <div class="section-label">
-                <span>🧾 Чеки последних сделок</span>
-                <span style="font-size:11px; text-transform:none;">Нажмите для открытия</span>
-            </div>
-            <div class="chats-vertical-list" id="dealsContainer"></div>
-        </div>
-    </div>
-
-    <!-- ================= СТЕКЛЯННАЯ ШТОРКА ЧЕКА СДЕЛКИ (BOTTOM SHEET) ================= -->
-    <div class="modal-backdrop" id="receiptModal" onclick="closeReceiptModal(event)">
-        <div class="receipt-sheet" onclick="event.stopPropagation()">
-            <div class="sheet-handle"></div>
-            <div style="text-align: center;">
-                <div class="receipt-badge-top">🛡 Verified by Telegram Business</div>
-                <div class="receipt-amount" id="rcptAmount">500 STAR</div>
-                <div class="receipt-gift-name" id="rcptGift">DurovsCap #1234</div>
-            </div>
-
-            <div class="receipt-table">
-                <div class="receipt-row">
-                    <span>Квитанция</span>
-                    <span id="rcptHash">#TX-00104</span>
-                </div>
-                <div class="receipt-row">
-                    <span>Статус сделки</span>
-                    <span id="rcptStatus" style="color: var(--tg-blue);">Активен</span>
-                </div>
-                <div class="receipt-row">
-                    <span>Получатель NFT</span>
-                    <span id="rcptReceiver">@myoec</span>
-                </div>
-                <div class="receipt-row">
-                    <span>Защита гаранта</span>
-                    <span style="color: #00e676;">Активна (100%)</span>
-                </div>
-            </div>
-
-            <button class="btn-glass" onclick="shareReceipt()">📤 Скопировать квитанцию сделки</button>
-            <button class="btn-glass btn-secondary" onclick="closeReceiptModal()">Закрыть</button>
+            <button class="btn-main" onclick="sendOfferDirect()">Отправить оффер</button>
         </div>
     </div>
 
@@ -753,6 +553,16 @@
             if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged();
         }
 
+        function openChannel() {
+            hapticImpact('light');
+            if (tg.openTelegramLink) {
+                tg.openTelegramLink('https://t.me/steknft');
+            } else {
+                window.open('https://t.me/steknft', '_blank');
+            }
+        }
+
+        // Отслеживание пальца/курсора для мягкого блика стекла
         document.addEventListener('pointermove', (e) => {
             document.querySelectorAll('.glass-card').forEach(card => {
                 const rect = card.getBoundingClientRect();
@@ -761,16 +571,7 @@
             });
         });
 
-        // ПУНКТ 3: Подстановка пресета подарка в поле ввода
-        function applyPreset(inputId, slug) {
-            hapticImpact('medium');
-            const input = document.getElementById(inputId);
-            input.value = `https://t.me/nft/${slug}-`;
-            input.focus();
-            if (inputId === 'settingsNftUrl') updateCmdPreview();
-        }
-
-        // Нижний док
+        // Нижний док (Чаты / Настройки)
         let activeTabIndex = 1;
         function initBottomDock() {
             const dock = document.getElementById('bottomDock');
@@ -827,8 +628,8 @@
             }
         }
 
-        // Внутренние переключатели Liquid Glass
-        function initLiquidSwitch(trackId, initialVal, onChangeCallback = null) {
+        // Стеклянные переключатели (Liquid Glass)
+        function initLiquidSwitch(trackId, initialVal) {
             const track = document.getElementById(trackId);
             const thumb = track.querySelector('.liquid-thumb');
             const options = Array.from(track.querySelectorAll('.liquid-option'));
@@ -850,7 +651,6 @@
                 }
 
                 options.forEach((opt, i) => opt.classList.toggle('active', i === index));
-                if (onChangeCallback) onChangeCallback(val);
             }
 
             window.addEventListener('resize', () => updateThumb(currentIndex, false));
@@ -888,26 +688,21 @@
                 const hoveredIndex = Math.min(count - 1, Math.max(0, Math.round(relX / thumbWidth)));
                 if (hoveredIndex !== currentIndex) {
                     currentIndex = hoveredIndex;
-                    const val = options[currentIndex].dataset.val;
-                    track.dataset.value = val;
+                    track.dataset.value = options[currentIndex].dataset.val;
                     options.forEach((opt, i) => opt.classList.toggle('active', i === currentIndex));
                     hapticSelect();
-                    if (onChangeCallback) onChangeCallback(val);
                 }
             }
         }
 
-        // Параметры URL
+        // Чтение параметров из URL
         const params = new URLSearchParams(window.location.search);
         const urlReceiver = params.get('receiver');
         const urlLang = params.get('lang') || 'ru';
         const rawChats = params.get('chats');
-        const rawDeals = params.get('deals');
 
         const user = tg.initDataUnsafe?.user;
         if (user) {
-            document.getElementById('userName').innerText = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-            document.getElementById('userId').innerText = 'ID: ' + user.id;
             document.getElementById('receiverInput').value = urlReceiver || user.username || '';
         } else if (urlReceiver) {
             document.getElementById('receiverInput').value = urlReceiver;
@@ -915,17 +710,9 @@
 
         initBottomDock();
         initLiquidSwitch('langSwitch', urlLang);
-        initLiquidSwitch('settingsCurrSwitch', 'star', () => updateCmdPreview());
         initLiquidSwitch('chatCurrSwitch', 'star');
 
-        function updateCmdPreview() {
-            const url = document.getElementById('settingsNftUrl').value.trim() || 'https://t.me/nft/DurovsCap-1234';
-            const price = document.getElementById('settingsNftPrice').value.trim() || '500';
-            const curr = document.getElementById('settingsCurrSwitch').dataset.value;
-            document.getElementById('cmdBox').innerText = `!создать ${url} ${price} ${curr}`;
-        }
-
-        // Рендер списка чатов
+        // Рендер и фильтрация всех личных чатов
         let selectedChat = null;
         const chatsContainer = document.getElementById('chatsContainer');
         let chatsList = [];
@@ -939,12 +726,17 @@
 
         document.getElementById('chatsCountBadge').innerText = chatsList.length;
 
-        if (chatsList.length === 0) {
-            chatsContainer.innerHTML = `<div class="empty-chats">Активных бизнес-чатов пока нет.<br>Напишите кому-нибудь при включенном Telegram Business, и чат появится здесь.</div>`;
-        } else {
-            chatsList.forEach((c, idx) => {
+        function renderChats(list) {
+            chatsContainer.innerHTML = '';
+            if (list.length === 0) {
+                chatsContainer.innerHTML = `<div class="empty-chats">Личные чаты появятся здесь автоматически при любом сообщении в вашем Telegram Business.</div>`;
+                return;
+            }
+
+            list.forEach((c) => {
+                const isSel = selectedChat && String(selectedChat.id) === String(c.id);
                 const row = document.createElement('div');
-                row.className = 'chat-row' + (idx === 0 ? ' selected' : '');
+                row.className = 'chat-row' + (isSel ? ' selected' : '');
                 const firstLetter = (c.t || '?')[0].toUpperCase();
                 row.innerHTML = `
                     <div class="chat-row-left">
@@ -958,95 +750,32 @@
                 `;
                 row.onclick = () => {
                     hapticSelect();
-                    document.querySelectorAll('#chatsContainer .chat-row').forEach(el => el.classList.remove('selected'));
-                    row.classList.add('selected');
                     selectedChat = c;
                     document.getElementById('selectedChatBadge').innerText = c.t;
+                    renderChats(list);
                 };
                 chatsContainer.appendChild(row);
-                if (idx === 0) {
-                    selectedChat = c;
-                    document.getElementById('selectedChatBadge').innerText = c.t;
-                }
             });
         }
 
-        // ПУНКТ 5: Рендер чеков сделок и открытие шторки
-        const dealsContainer = document.getElementById('dealsContainer');
-        let dealsList = [];
-        let currentReceipt = null;
-
-        if (rawDeals) {
-            try {
-                const b64 = rawDeals.replace(/-/g, '+').replace(/_/g, '/');
-                dealsList = JSON.parse(decodeURIComponent(escape(atob(b64))));
-            } catch (e) {}
+        if (chatsList.length > 0) {
+            selectedChat = chatsList[0];
+            document.getElementById('selectedChatBadge').innerText = selectedChat.t;
         }
+        renderChats(chatsList);
 
-        if (dealsList.length === 0) {
-            dealsList = [
-                { id: 104, n: "DurovsCap #1234", p: 500, c: "STAR", s: "completed" }
-            ];
-        }
-
-        dealsList.forEach(d => {
-            const row = document.createElement('div');
-            row.className = 'chat-row';
-            const isDone = d.s === 'completed';
-            row.innerHTML = `
-                <div class="chat-row-left">
-                    <div class="chat-avatar" style="background: linear-gradient(135deg, #00b894, #0984e3);">🎁</div>
-                    <div>
-                        <div class="chat-title">${d.n}</div>
-                        <div class="chat-user">#TX-00${d.id} • ${d.p} ${d.c}</div>
-                    </div>
-                </div>
-                <div class="deal-pill ${isDone ? 'completed' : ''}">${isDone ? 'Оплачено' : 'В сделке'}</div>
-            `;
-            row.onclick = () => openReceiptModal(d);
-            dealsContainer.appendChild(row);
-        });
-
-        function openReceiptModal(deal) {
-            hapticImpact('medium');
-            currentReceipt = deal;
-            const recUser = document.getElementById('receiverInput').value || 'myoec';
-            document.getElementById('rcptAmount').innerText = `${deal.p} ${deal.c}`;
-            document.getElementById('rcptGift').innerText = deal.n;
-            document.getElementById('rcptHash').innerText = `#TX-00${deal.id}`;
-            document.getElementById('rcptReceiver').innerText = `@${recUser}`;
-            
-            const stEl = document.getElementById('rcptStatus');
-            if (deal.s === 'completed') {
-                stEl.innerText = 'Завершено и оплачено ✅';
-                stEl.style.color = '#00e676';
-            } else {
-                stEl.innerText = 'Ожидает передачи NFT ⏳';
-                stEl.style.color = '#2ea6ff';
+        function filterChats() {
+            const q = document.getElementById('chatSearchInput').value.trim().toLowerCase();
+            if (!q) {
+                renderChats(chatsList);
+                return;
             }
-            document.getElementById('receiptModal').classList.add('open');
-        }
-
-        function closeReceiptModal(e) {
-            hapticImpact('light');
-            document.getElementById('receiptModal').classList.remove('open');
-        }
-
-        function shareReceipt() {
-            if (!currentReceipt) return;
-            hapticImpact('heavy');
-            const recUser = document.getElementById('receiverInput').value || 'myoec';
-            const text = `🧾 Квитанция сделки #TX-00${currentReceipt.id}\n🎁 Подарок: ${currentReceipt.n}\n💰 Сумма: ${currentReceipt.p} ${currentReceipt.c}\n👤 Получатель: @${recUser}\n🛡 Verified by Telegram Business`;
-            navigator.clipboard.writeText(text);
-            hapticNotify('success');
-            tg.showAlert('✅ Квитанция сделки скопирована в буфер обмена!');
-        }
-
-        function copyCommand() {
-            hapticImpact('medium');
-            navigator.clipboard.writeText(document.getElementById('cmdBox').innerText);
-            hapticNotify('success');
-            tg.showAlert('✅ Команда скопирована!');
+            const filtered = chatsList.filter(c =>
+                (c.t && c.t.toLowerCase().includes(q)) ||
+                (c.u && c.u.toLowerCase().includes(q)) ||
+                String(c.id).includes(q)
+            );
+            renderChats(filtered);
         }
 
         function saveSettings() {
@@ -1054,7 +783,7 @@
             const lang = document.getElementById('langSwitch').dataset.value;
             if (!receiver) {
                 hapticNotify('error');
-                tg.showAlert('❌ Укажите ваш юзернейм!');
+                tg.showAlert('Укажите ваш юзернейм');
                 return;
             }
             hapticImpact('heavy');
@@ -1069,17 +798,17 @@
 
             if (!selectedChat) {
                 hapticNotify('error');
-                tg.showAlert('❌ Выберите бизнес-чат сверху!');
+                tg.showAlert('Выберите личный чат сверху');
                 return;
             }
             if (!url || !url.includes('t.me/nft/')) {
                 hapticNotify('error');
-                tg.showAlert('❌ Вставьте корректную ссылку на подарок!');
+                tg.showAlert('Вставьте корректную ссылку на подарок');
                 return;
             }
             if (!price || Number(price) <= 0) {
                 hapticNotify('error');
-                tg.showAlert('❌ Укажите сумму!');
+                tg.showAlert('Укажите сумму');
                 return;
             }
 
@@ -1098,4 +827,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
