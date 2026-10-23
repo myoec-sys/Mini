@@ -8,14 +8,12 @@
     <style>
         :root {
             --bg: #050505;
-            --card-bg: rgba(255, 255, 255, 0.045);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --card-highlight: rgba(255, 255, 255, 0.22);
-            --input-bg: rgba(255, 255, 255, 0.04);
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --card-border: rgba(255, 255, 255, 0.09);
+            --card-highlight: rgba(255, 255, 255, 0.2);
+            --input-bg: rgba(255, 255, 255, 0.035);
             --text: #ffffff;
-            --subtext: #88888e;
-            --accent: #ffffff;
-            --accent-text: #000000;
+            --subtext: #86868b;
         }
 
         * {
@@ -33,14 +31,14 @@
             min-height: 100vh;
             padding: 14px 16px 110px 16px;
             overflow-x: hidden;
+            letter-spacing: -0.015em;
         }
 
-        /* Верхний минималистичный бар @steknft */
         .top-bar {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 16px;
+            padding: 13px 16px;
             margin-bottom: 16px;
             background: var(--card-bg);
             backdrop-filter: blur(28px);
@@ -53,21 +51,20 @@
         }
 
         .top-bar:active {
-            transform: scale(0.98);
-            background: rgba(255, 255, 255, 0.08);
+            transform: scale(0.985);
+            background: rgba(255, 255, 255, 0.07);
         }
 
         .top-bar span {
             font-size: 15px;
             font-weight: 600;
-            letter-spacing: 0.3px;
+            letter-spacing: -0.02em;
             color: var(--text);
         }
 
-        /* Переключение вкладок */
         .tab-view {
             display: none;
-            animation: fade 0.2s ease;
+            animation: fade 0.22s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .tab-view.active {
@@ -79,7 +76,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Стеклянные карточки (Monochrome Liquid Glass) */
         .glass-card {
             position: relative;
             background: var(--card-bg);
@@ -90,7 +86,7 @@
             border-radius: 22px;
             padding: 16px;
             margin-bottom: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             overflow: hidden;
         }
 
@@ -98,7 +94,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.07), transparent 60%);
+            background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.06), transparent 60%);
             pointer-events: none;
         }
 
@@ -106,7 +102,7 @@
             font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
+            letter-spacing: 0.5px;
             color: var(--subtext);
             margin-bottom: 10px;
             display: flex;
@@ -114,7 +110,6 @@
             align-items: center;
         }
 
-        /* Поля ввода */
         .glass-input-wrap {
             position: relative;
             display: flex;
@@ -137,7 +132,7 @@
         .glass-input {
             width: 100%;
             background: var(--input-bg);
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             color: var(--text);
             padding: 13px 14px;
             border-radius: 14px;
@@ -148,7 +143,7 @@
         }
 
         .glass-input::placeholder {
-            color: #55555a;
+            color: #525257;
         }
 
         .glass-input.has-prefix {
@@ -156,23 +151,16 @@
         }
 
         .glass-input:focus {
-            border-color: rgba(255, 255, 255, 0.45);
-            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.065);
         }
 
-        .hint {
-            font-size: 12px;
-            color: var(--subtext);
-            margin-top: 8px;
-            line-height: 1.4;
-        }
-
-        /* ================= LIQUID GLASS ПЕРЕКЛЮЧАТЕЛИ ================= */
+        /* Переключатели Liquid Glass */
         .liquid-track {
             position: relative;
             display: grid;
             background: rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.07);
             border-radius: 15px;
             padding: 4px;
             height: 46px;
@@ -188,13 +176,13 @@
             top: 4px;
             bottom: 4px;
             left: 4px;
-            background: rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.14);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.32);
+            border: 1px solid rgba(255, 255, 255, 0.28);
             border-radius: 11px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35);
-            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), scale 0.18s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.15), scale 0.18s ease;
             pointer-events: none;
             z-index: 1;
         }
@@ -202,7 +190,7 @@
         .liquid-track.dragging .liquid-thumb {
             transition: scale 0.15s ease;
             transform: translateX(var(--drag-x, 0px)) scale(1.03);
-            background: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .liquid-option {
@@ -222,12 +210,12 @@
             color: #ffffff;
         }
 
-        /* ================= СПИСОК ВСЕХ ЛИЧНЫХ ЧАТОВ ================= */
+        /* Список до 50 чатов */
         .chats-vertical-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 290px;
+            gap: 6px;
+            max-height: 280px;
             overflow-y: auto;
             padding-right: 2px;
         }
@@ -237,7 +225,7 @@
         }
 
         .chats-vertical-list::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.18);
             border-radius: 99px;
         }
 
@@ -245,8 +233,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 11px 14px;
             border-radius: 15px;
             cursor: pointer;
@@ -254,9 +242,9 @@
         }
 
         .chat-row.selected {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.45);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.11);
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
         }
 
         .chat-row-left {
@@ -266,16 +254,16 @@
         }
 
         .chat-avatar {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             color: #fff;
         }
 
@@ -291,58 +279,140 @@
             margin-top: 2px;
         }
 
-        .chat-radio {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 1.5px solid var(--subtext);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .check-mark {
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0;
+            transition: opacity 0.18s ease;
         }
 
-        .chat-row.selected .chat-radio {
-            border-color: #ffffff;
-            background: #ffffff;
+        .chat-row.selected .check-mark {
+            opacity: 1;
         }
 
-        .chat-row.selected .chat-radio::after {
-            content: "";
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #000000;
+        .deal-pill {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.16);
         }
 
         .empty-chats {
             font-size: 13px;
             color: var(--subtext);
             text-align: center;
-            padding: 18px 10px;
+            padding: 16px 10px;
             line-height: 1.45;
         }
 
-        /* Кнопка в строгом белом/стеклянном стиле */
         .btn-main {
             width: 100%;
-            background: #ffffff;
-            color: #000000;
-            border: none;
+            background: rgba(255, 255, 255, 0.13);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-top-color: rgba(255, 255, 255, 0.42);
             padding: 14px;
             border-radius: 16px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.15s ease, opacity 0.15s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25);
+            transition: transform 0.15s ease, background 0.2s ease;
             margin-top: 12px;
         }
 
         .btn-main:active {
             transform: scale(0.98);
-            opacity: 0.9;
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        /* ================= НИЖНИЙ ДОК (МОНОХРОМНОЕ СТЕКЛО) ================= */
+        /* Модальная шторка квитанции */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.26s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .modal-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .receipt-sheet {
+            width: 100%;
+            max-width: 420px;
+            background: rgba(18, 18, 20, 0.9);
+            backdrop-filter: blur(36px) saturate(140%);
+            -webkit-backdrop-filter: blur(36px) saturate(140%);
+            border-top: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 26px 26px 0 0;
+            padding: 14px 20px 28px 20px;
+            box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.75);
+            transform: translateY(100%);
+            transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .modal-backdrop.open .receipt-sheet {
+            transform: translateY(0);
+        }
+
+        .sheet-handle {
+            width: 40px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 99px;
+            margin: 0 auto 16px auto;
+        }
+
+        .receipt-amount {
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.03em;
+            margin-bottom: 4px;
+        }
+
+        .receipt-gift-name {
+            font-size: 13px;
+            color: var(--subtext);
+            margin-bottom: 16px;
+        }
+
+        .receipt-table {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .receipt-row:last-child { border-bottom: none; }
+        .receipt-row span:first-child { color: var(--subtext); }
+        .receipt-row span:last-child { color: #fff; font-weight: 600; }
+
+        /* Нижний док */
         .bottom-dock-wrap {
             position: fixed;
             bottom: 16px;
@@ -358,16 +428,16 @@
             width: 100%;
             max-width: 360px;
             height: 66px;
-            background: rgba(18, 18, 20, 0.82);
+            background: rgba(16, 16, 18, 0.84);
             backdrop-filter: blur(32px) saturate(140%);
             -webkit-backdrop-filter: blur(32px) saturate(140%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.11);
             border-top-color: rgba(255, 255, 255, 0.24);
             border-radius: 999px;
             padding: 5px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.14);
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.12);
             touch-action: none;
             overflow: hidden;
         }
@@ -377,14 +447,14 @@
             top: 5px;
             bottom: 5px;
             left: 5px;
-            background: rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.13);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            border-top-color: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            border-top-color: rgba(255, 255, 255, 0.42);
             border-radius: 999px;
-            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35);
-            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), scale 0.2s ease;
+            box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.32);
+            transition: transform 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.15), scale 0.2s ease;
             pointer-events: none;
             z-index: 1;
         }
@@ -447,25 +517,23 @@
 </head>
 <body>
 
-    <!-- Верхняя минималистичная плашка @steknft -->
     <div class="top-bar" onclick="openChannel()">
         <span>@steknft</span>
     </div>
 
-    <!-- ================= ВКЛАДКА 1: НАСТРОЙКИ (НАЧАЛЬНОЕ МЕНЮ) ================= -->
+    <!-- ВКЛАДКА 1: НАСТРОЙКИ -->
     <div id="view-settings" class="tab-view active">
 
         <div class="glass-card">
-            <div class="section-label">Аккаунт для получения подарков</div>
+            <div class="section-label">Получатель подарков</div>
             <div class="glass-input-wrap">
                 <span class="prefix">@</span>
                 <input type="text" id="receiverInput" class="glass-input has-prefix" placeholder="username">
             </div>
-            <p class="hint">На этот юзернейм создаётся ссылка <code>tg://send_gift?to=...</code> и проверяется наличие NFT.</p>
         </div>
 
         <div class="glass-card">
-            <div class="section-label">Язык карточек оффера</div>
+            <div class="section-label">Язык карточек</div>
             <div class="liquid-track cols-2" id="langSwitch" data-value="ru">
                 <div class="liquid-thumb"></div>
                 <div class="liquid-option active" data-val="ru">Русский</div>
@@ -473,30 +541,30 @@
             </div>
         </div>
 
-        <button class="btn-main" onclick="saveSettings()">Сохранить настройки</button>
+        <button class="btn-main" onclick="saveSettings()">Сохранить</button>
     </div>
 
-    <!-- ================= ВКЛАДКА 2: ЧАТЫ ================= -->
+    <!-- ВКЛАДКА 2: ЧАТЫ И ПОИСК ПО ЮЗЕРНЕЙМУ -->
     <div id="view-chats" class="tab-view">
 
         <div class="glass-card">
             <div class="section-label">
-                <span>Личные чаты</span>
+                <span>Личные чаты (до 50)</span>
                 <span id="selectedChatBadge" style="color: #fff;">Не выбран</span>
             </div>
 
-            <!-- Поиск по всем личным чатам -->
-            <div class="glass-input-wrap" style="margin-bottom: 12px;">
-                <input type="text" id="chatSearchInput" class="glass-input" placeholder="Поиск по имени, @username или ID..." oninput="filterChats()">
+            <!-- Поиск по чатам или прямой ввод любого @username -->
+            <div class="glass-input-wrap" style="margin-bottom: 10px;">
+                <input type="text" id="chatSearchInput" class="glass-input" placeholder="Поиск по @username, имени или ID..." oninput="filterChats()">
             </div>
 
             <div class="chats-vertical-list" id="chatsContainer"></div>
         </div>
 
         <div class="glass-card">
-            <div class="section-label">Отправить оффер</div>
+            <div class="section-label">Новый оффер</div>
             <div class="glass-input-wrap">
-                <input type="text" id="chatNftUrl" class="glass-input" placeholder="Ссылка: https://t.me/nft/...">
+                <input type="text" id="chatNftUrl" class="glass-input" placeholder="https://t.me/nft/...">
             </div>
             <div class="glass-input-wrap" style="margin-bottom: 12px;">
                 <input type="number" id="chatNftPrice" class="glass-input" placeholder="Сумма" value="500">
@@ -511,9 +579,42 @@
 
             <button class="btn-main" onclick="sendOfferDirect()">Отправить оффер</button>
         </div>
+
+        <div class="glass-card">
+            <div class="section-label">Последние сделки</div>
+            <div class="chats-vertical-list" id="dealsContainer"></div>
+        </div>
     </div>
 
-    <!-- ================= НИЖНИЙ ДОК-ПЕРЕКЛЮЧАТЕЛЬ ================= -->
+    <!-- МОДАЛЬНАЯ ШТОРКА ЧЕКА СДЕЛКИ -->
+    <div class="modal-backdrop" id="receiptModal" onclick="closeReceiptModal()">
+        <div class="receipt-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
+            <div style="text-align: center;">
+                <div class="receipt-amount" id="rcptAmount">500 STAR</div>
+                <div class="receipt-gift-name" id="rcptGift">NFT Gift</div>
+            </div>
+
+            <div class="receipt-table">
+                <div class="receipt-row">
+                    <span>Квитанция</span>
+                    <span id="rcptHash">#TX-001</span>
+                </div>
+                <div class="receipt-row">
+                    <span>Статус</span>
+                    <span id="rcptStatus">Активен</span>
+                </div>
+                <div class="receipt-row">
+                    <span>Получатель</span>
+                    <span id="rcptReceiver">@myoec</span>
+                </div>
+            </div>
+
+            <button class="btn-main" onclick="shareReceipt()">Скопировать квитанцию</button>
+        </div>
+    </div>
+
+    <!-- НИЖНИЙ ДОК -->
     <div class="bottom-dock-wrap">
         <div class="bottom-dock" id="bottomDock">
             <div class="dock-pill" id="dockPill"></div>
@@ -562,7 +663,6 @@
             }
         }
 
-        // Отслеживание пальца/курсора для мягкого блика стекла
         document.addEventListener('pointermove', (e) => {
             document.querySelectorAll('.glass-card').forEach(card => {
                 const rect = card.getBoundingClientRect();
@@ -571,7 +671,7 @@
             });
         });
 
-        // Нижний док (Чаты / Настройки)
+        // Нижний док
         let activeTabIndex = 1;
         function initBottomDock() {
             const dock = document.getElementById('bottomDock');
@@ -628,7 +728,7 @@
             }
         }
 
-        // Стеклянные переключатели (Liquid Glass)
+        // Переключатели Liquid Glass
         function initLiquidSwitch(trackId, initialVal) {
             const track = document.getElementById(trackId);
             const thumb = track.querySelector('.liquid-thumb');
@@ -699,7 +799,9 @@
         const params = new URLSearchParams(window.location.search);
         const urlReceiver = params.get('receiver');
         const urlLang = params.get('lang') || 'ru';
+        const defaultConnId = params.get('dcid') || '';
         const rawChats = params.get('chats');
+        const rawDeals = params.get('deals');
 
         const user = tg.initDataUnsafe?.user;
         if (user) {
@@ -712,7 +814,7 @@
         initLiquidSwitch('langSwitch', urlLang);
         initLiquidSwitch('chatCurrSwitch', 'star');
 
-        // Рендер и фильтрация всех личных чатов
+        // Рендер до 50 личных чатов + поиск любого человека по @username
         let selectedChat = null;
         const chatsContainer = document.getElementById('chatsContainer');
         let chatsList = [];
@@ -726,10 +828,49 @@
 
         document.getElementById('chatsCountBadge').innerText = chatsList.length;
 
-        function renderChats(list) {
+        function renderChats(list, rawSearchQuery = '') {
             chatsContainer.innerHTML = '';
-            if (list.length === 0) {
-                chatsContainer.innerHTML = `<div class="empty-chats">Личные чаты появятся здесь автоматически при любом сообщении в вашем Telegram Business.</div>`;
+
+            // Если в поиске введён @username или ID, предлагаем выбрать его напрямую, даже если его еще нет в списке
+            const cleanQuery = rawSearchQuery.replace('@', '').trim();
+            if (cleanQuery.length >= 3) {
+                const exactExists = list.some(c =>
+                    (c.u && c.u.toLowerCase() === cleanQuery.toLowerCase()) ||
+                    String(c.id) === cleanQuery
+                );
+
+                if (!exactExists) {
+                    const directItem = {
+                        id: cleanQuery.match(/^\d+$/) ? cleanQuery : '@' + cleanQuery,
+                        cid: defaultConnId || (chatsList[0] ? chatsList[0].cid : ''),
+                        t: '@' + cleanQuery,
+                        u: cleanQuery
+                    };
+                    const isDirectSel = selectedChat && String(selectedChat.id) === String(directItem.id);
+                    const directRow = document.createElement('div');
+                    directRow.className = 'chat-row' + (isDirectSel ? ' selected' : '');
+                    directRow.innerHTML = `
+                        <div class="chat-row-left">
+                            <div class="chat-avatar">@</div>
+                            <div>
+                                <div class="chat-title">Выбрать @${cleanQuery}</div>
+                                <div class="chat-user">Отправить оффер по юзернейму</div>
+                            </div>
+                        </div>
+                        <div class="check-mark">✓</div>
+                    `;
+                    directRow.onclick = () => {
+                        hapticSelect();
+                        selectedChat = directItem;
+                        document.getElementById('selectedChatBadge').innerText = directItem.t;
+                        renderChats(list, rawSearchQuery);
+                    };
+                    chatsContainer.appendChild(directRow);
+                }
+            }
+
+            if (list.length === 0 && cleanQuery.length < 3) {
+                chatsContainer.innerHTML = `<div class="empty-chats">Введите @username человека в поиск выше или напишите ему в Telegram Business</div>`;
                 return;
             }
 
@@ -746,13 +887,13 @@
                             <div class="chat-user">${c.u ? '@' + c.u : 'ID: ' + c.id}</div>
                         </div>
                     </div>
-                    <div class="chat-radio"></div>
+                    <div class="check-mark">✓</div>
                 `;
                 row.onclick = () => {
                     hapticSelect();
                     selectedChat = c;
                     document.getElementById('selectedChatBadge').innerText = c.t;
-                    renderChats(list);
+                    renderChats(list, rawSearchQuery);
                 };
                 chatsContainer.appendChild(row);
             });
@@ -765,9 +906,10 @@
         renderChats(chatsList);
 
         function filterChats() {
-            const q = document.getElementById('chatSearchInput').value.trim().toLowerCase();
+            const rawQ = document.getElementById('chatSearchInput').value.trim();
+            const q = rawQ.replace('@', '').toLowerCase();
             if (!q) {
-                renderChats(chatsList);
+                renderChats(chatsList, '');
                 return;
             }
             const filtered = chatsList.filter(c =>
@@ -775,7 +917,68 @@
                 (c.u && c.u.toLowerCase().includes(q)) ||
                 String(c.id).includes(q)
             );
-            renderChats(filtered);
+            renderChats(filtered, rawQ);
+        }
+
+        // Рендер последних сделок
+        const dealsContainer = document.getElementById('dealsContainer');
+        let dealsList = [];
+        let currentReceipt = null;
+
+        if (rawDeals) {
+            try {
+                const b64 = rawDeals.replace(/-/g, '+').replace(/_/g, '/');
+                dealsList = JSON.parse(decodeURIComponent(escape(atob(b64))));
+            } catch (e) {}
+        }
+
+        if (dealsList.length === 0) {
+            dealsContainer.innerHTML = `<div class="empty-chats">История сделок пуста</div>`;
+        } else {
+            dealsList.forEach(d => {
+                const row = document.createElement('div');
+                row.className = 'chat-row';
+                const isDone = d.s === 'completed';
+                row.innerHTML = `
+                    <div class="chat-row-left">
+                        <div class="chat-avatar">#</div>
+                        <div>
+                            <div class="chat-title">${d.n}</div>
+                            <div class="chat-user">#TX-00${d.id} • ${d.p} ${d.c}</div>
+                        </div>
+                    </div>
+                    <div class="deal-pill">${isDone ? 'Оплачено' : 'В сделке'}</div>
+                `;
+                row.onclick = () => openReceiptModal(d);
+                dealsContainer.appendChild(row);
+            });
+        }
+
+        function openReceiptModal(deal) {
+            hapticImpact('medium');
+            currentReceipt = deal;
+            const recUser = document.getElementById('receiverInput').value || 'myoec';
+            document.getElementById('rcptAmount').innerText = `${deal.p} ${deal.c}`;
+            document.getElementById('rcptGift').innerText = deal.n;
+            document.getElementById('rcptHash').innerText = `#TX-00${deal.id}`;
+            document.getElementById('rcptReceiver').innerText = `@${recUser}`;
+            document.getElementById('rcptStatus').innerText = deal.s === 'completed' ? 'Оплачено' : 'Ожидание';
+            document.getElementById('receiptModal').classList.add('open');
+        }
+
+        function closeReceiptModal() {
+            hapticImpact('light');
+            document.getElementById('receiptModal').classList.remove('open');
+        }
+
+        function shareReceipt() {
+            if (!currentReceipt) return;
+            hapticImpact('heavy');
+            const recUser = document.getElementById('receiverInput').value || 'myoec';
+            const text = `Квитанция #TX-00${currentReceipt.id}\nПодарок: ${currentReceipt.n}\nСумма: ${currentReceipt.p} ${currentReceipt.c}\nПолучатель: @${recUser}`;
+            navigator.clipboard.writeText(text);
+            hapticNotify('success');
+            tg.showAlert('Квитанция скопирована');
         }
 
         function saveSettings() {
@@ -798,12 +1001,12 @@
 
             if (!selectedChat) {
                 hapticNotify('error');
-                tg.showAlert('Выберите личный чат сверху');
+                tg.showAlert('Выберите чат или введите @username в поиске');
                 return;
             }
             if (!url || !url.includes('t.me/nft/')) {
                 hapticNotify('error');
-                tg.showAlert('Вставьте корректную ссылку на подарок');
+                tg.showAlert('Вставьте ссылку на подарок');
                 return;
             }
             if (!price || Number(price) <= 0) {
@@ -817,7 +1020,7 @@
             tg.sendData(JSON.stringify({
                 action: "send_offer",
                 chat_id: selectedChat.id,
-                conn_id: selectedChat.cid,
+                conn_id: selectedChat.cid || defaultConnId,
                 nft_url: url,
                 price: Number(price),
                 currency: curr,
