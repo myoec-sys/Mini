@@ -17,6 +17,9 @@
             --warn-bg: rgba(255, 69, 58, 0.12);
             --warn-border: rgba(255, 69, 58, 0.35);
             --warn-text: #ff6961;
+            --tg-bubble: #212d3b;
+            --tg-link: #64b5ef;
+            --tg-accent: #e58f7c;
         }
 
         * {
@@ -38,12 +41,11 @@
             background-color: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            padding: max(14px, env(safe-area-inset-top)) 16px max(110px, env(safe-area-inset-bottom) + 90px) 16px;
+            padding: max(14px, env(safe-area-inset-top)) 16px max(110px, env(safe-area-inset-bottom) + 95px) 16px;
             overflow-x: hidden;
             letter-spacing: -0.015em;
         }
 
-        /* Плашка профиля пользователя */
         .profile-bar {
             display: flex;
             align-items: center;
@@ -89,9 +91,6 @@
             font-size: 14px;
             font-weight: 600;
             color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
 
         .profile-username {
@@ -124,8 +123,17 @@
 
         .burn-warning.visible { display: block; }
 
-        .tab-view { display: none; }
+        .tab-view {
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
         .tab-view.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         .glass-card {
             position: relative;
@@ -152,6 +160,13 @@
             align-items: center;
         }
 
+        .sub-label {
+            font-size: 12px;
+            color: #a1a1a6;
+            margin: 12px 0 6px 0;
+            font-weight: 500;
+        }
+
         .hint-sub {
             font-size: 11px;
             color: #55555a;
@@ -175,6 +190,12 @@
             margin-bottom: 10px;
         }
 
+        .two-cols-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
         .prefix {
             position: absolute;
             left: 14px;
@@ -187,9 +208,9 @@
             background: var(--input-bg);
             border: 1px solid rgba(255, 255, 255, 0.06);
             color: var(--text);
-            padding: 13px 14px;
+            padding: 12px 13px;
             border-radius: 14px;
-            font-size: 14px;
+            font-size: 13.5px;
             outline: none;
             user-select: text;
         }
@@ -203,7 +224,103 @@
         .glass-input.has-prefix { padding-left: 32px; }
         .glass-input:focus, .glass-textarea:focus { border-color: rgba(255, 255, 255, 0.35); }
 
-        /* Живой предпросмотр NFT */
+        .tg-mockup-wrap {
+            background: #0f161e;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+
+        .tg-bubble {
+            background: var(--tg-bubble);
+            border-radius: 14px 14px 14px 4px;
+            padding: 10px 12px;
+            font-size: 13.5px;
+            line-height: 1.4;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            word-break: break-word;
+        }
+
+        .tg-link {
+            color: var(--tg-link);
+            text-decoration: none;
+        }
+
+        .tg-embed-card {
+            border-left: 3px solid var(--tg-accent);
+            background: rgba(229, 143, 124, 0.08);
+            border-radius: 4px 10px 10px 4px;
+            padding: 8px 10px;
+            font-weight: 400;
+        }
+
+        .tg-embed-site {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--tg-accent);
+        }
+
+        .tg-embed-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .tg-embed-art {
+            width: 100%;
+            height: 115px;
+            border-radius: 10px;
+            background: radial-gradient(circle at center, #e59378 0%, #c46d53 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            margin-bottom: 8px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .tg-embed-show-btn {
+            text-align: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--tg-accent);
+            letter-spacing: 0.4px;
+            padding-top: 2px;
+        }
+
+        .tg-inline-kb {
+            display: grid;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .tg-inline-kb.row-mode {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .tg-inline-kb.col-mode {
+            grid-template-columns: 1fr;
+        }
+
+        .tg-inline-btn {
+            background: rgba(33, 45, 59, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 9px;
+            padding: 9px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .live-preview-box {
             display: none;
             flex-direction: column;
@@ -227,11 +344,7 @@
             background: rgba(255, 255, 255, 0.04);
         }
 
-        .live-item-name {
-            font-weight: 600;
-            color: #fff;
-        }
-
+        .live-item-name { font-weight: 600; color: #fff; }
         .live-tag {
             font-size: 10px;
             font-weight: 700;
@@ -241,27 +354,27 @@
             border-radius: 6px;
         }
 
-        /* Переключатели */
         .liquid-track {
             position: relative;
             display: grid;
             background: rgba(0, 0, 0, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: 15px;
+            border-radius: 14px;
             padding: 4px;
-            height: 46px;
+            height: 42px;
         }
 
         .liquid-track.cols-2 { grid-template-columns: 1fr 1fr; }
         .liquid-track.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .liquid-track.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
         .liquid-thumb {
             position: absolute;
             top: 4px; bottom: 4px; left: 4px;
             background: rgba(255, 255, 255, 0.14);
             border: 1px solid rgba(255, 255, 255, 0.28);
-            border-radius: 11px;
-            transition: transform 0.3s ease;
+            border-radius: 10px;
+            transition: transform 0.28s ease;
             pointer-events: none;
         }
 
@@ -269,7 +382,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 12.5px;
             font-weight: 600;
             color: var(--subtext);
             cursor: pointer;
@@ -278,7 +391,6 @@
 
         .liquid-option.active { color: #ffffff; }
 
-        /* Список чатов + анимация зажатия */
         .chats-vertical-list {
             display: flex;
             flex-direction: column;
@@ -296,7 +408,7 @@
             padding: 10px 14px;
             border-radius: 14px;
             cursor: pointer;
-            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.2s ease, background 0.2s ease;
         }
 
         .chat-row.selected {
@@ -349,7 +461,21 @@
 
         .btn-main:active { transform: scale(0.98); }
 
-        /* Док */
+        .btn-reset {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--subtext);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 11px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .btn-reset:active { transform: scale(0.98); }
+
         .bottom-dock-wrap {
             position: fixed;
             bottom: 16px; left: 16px; right: 16px;
@@ -360,16 +486,19 @@
 
         .bottom-dock {
             width: 100%;
-            max-width: 340px;
-            height: 62px;
-            background: rgba(16, 16, 18, 0.86);
+            max-width: 380px;
+            height: 64px;
+            background: rgba(16, 16, 18, 0.88);
             backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
             border: 1px solid rgba(255, 255, 255, 0.12);
+            border-top-color: rgba(255, 255, 255, 0.24);
             border-radius: 999px;
             padding: 4px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             position: relative;
+            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.8);
         }
 
         .dock-pill {
@@ -378,7 +507,7 @@
             background: rgba(255, 255, 255, 0.14);
             border: 1px solid rgba(255, 255, 255, 0.26);
             border-radius: 999px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .dock-tab {
@@ -386,19 +515,24 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2px;
+            gap: 3px;
             cursor: pointer;
             color: var(--subtext);
             z-index: 2;
+            transition: color 0.2s;
         }
 
         .dock-tab.active { color: #ffffff; }
+        .dock-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
         .dock-label { font-size: 11px; font-weight: 600; }
     </style>
 </head>
 <body>
 
-    <!-- Плашка профиля -->
     <div class="profile-bar">
         <div class="profile-left">
             <div class="profile-avatar" id="userAvatar">?</div>
@@ -412,33 +546,11 @@
 
     <div class="burn-warning" id="burnWarningBox">
         ⚠️ <b>Необходимо установить юзернейм!</b><br>
-        Если не указать <b>@username</b>, переданные NFT безвозвратно сгорят!
+        Если не указать <b>@username</b> во вкладке «Настройки», переданные NFT безвозвратно сгорят!
     </div>
 
-    <!-- ВКЛАДКА 1: НАСТРОЙКИ -->
-    <div id="view-settings" class="tab-view active">
-        <div class="glass-card">
-            <div class="section-label">Юзернейм получателя</div>
-            <div class="glass-input-wrap">
-                <span class="prefix">@</span>
-                <input type="text" id="receiverInput" class="glass-input has-prefix" placeholder="username" oninput="checkWarning()">
-            </div>
-        </div>
-
-        <div class="glass-card">
-            <div class="section-label">Язык карточек</div>
-            <div class="liquid-track cols-2" id="langSwitch" data-value="ru">
-                <div class="liquid-thumb"></div>
-                <div class="liquid-option active" data-val="ru">Русский</div>
-                <div class="liquid-option" data-val="en">English</div>
-            </div>
-        </div>
-
-        <button class="btn-main" onclick="saveSettings()">Сохранить настройки</button>
-    </div>
-
-    <!-- ВКЛАДКА 2: ЧАТЫ И ПАКЕТНЫЙ ОФФЕР -->
-    <div id="view-chats" class="tab-view">
+    <!-- ВКЛАДКА 1: ЧАТЫ И ОТПРАВКА ОФФЕРА -->
+    <div id="view-chats" class="tab-view active">
         <div class="glass-card">
             <div class="section-label">
                 <span>Личные чаты</span>
@@ -456,18 +568,18 @@
 
         <div class="glass-card">
             <div class="section-label">
-                <span>Пакетный оффер</span>
+                <span>Отправка оффера (6 часов)</span>
                 <span id="lotsCountBadge" style="color: #34c759;">0 лотов</span>
             </div>
 
             <div class="glass-input-wrap">
-                <textarea id="chatNftUrl" class="glass-textarea" placeholder="Вставьте ссылки на подарки (через запятую или пробел)&#10;t.me/nft/Cap-1, t.me/nft/Dog-2" oninput="onGiftsInput()"></textarea>
+                <textarea id="chatNftUrl" class="glass-textarea" placeholder="Вставьте одну или несколько ссылок&#10;t.me/nft/KissedFrog-940" oninput="onGiftsInput()"></textarea>
             </div>
 
             <div class="live-preview-box" id="livePreviewBox"></div>
 
             <div class="glass-input-wrap" style="margin-bottom: 12px;">
-                <input type="number" id="chatNftPrice" class="glass-input" placeholder="Сумма за все подарки" value="500">
+                <input type="number" id="chatNftPrice" class="glass-input" placeholder="Сумма" value="5000">
             </div>
 
             <div class="liquid-track cols-3" id="chatCurrSwitch" data-value="star">
@@ -481,14 +593,117 @@
         </div>
     </div>
 
-    <!-- Нижний док -->
+    <!-- ВКЛАДКА 2: КАСТОМИЗАЦИЯ ОФФЕРА -->
+    <div id="view-offer" class="tab-view">
+        <div class="glass-card">
+            <div class="section-label">
+                <span>Предпросмотр оффера</span>
+                <span style="color: #34c759;">Таймер: 6ч</span>
+            </div>
+
+            <div class="tg-mockup-wrap">
+                <div class="tg-bubble" id="mockBubble"></div>
+                <div class="tg-inline-kb row-mode" id="mockKeyboard"></div>
+            </div>
+
+            <div class="sub-label">Вариант текста оффера</div>
+            <div class="liquid-track cols-2" id="templateSwitch" data-value="default">
+                <div class="liquid-thumb"></div>
+                <div class="liquid-option active" data-val="default">Default</div>
+                <div class="liquid-option" data-val="original">Original</div>
+            </div>
+
+            <div class="sub-label">Стиль шрифта текста</div>
+            <div class="liquid-track cols-2" id="boldSwitch" data-value="0">
+                <div class="liquid-thumb"></div>
+                <div class="liquid-option active" data-val="0">Default</div>
+                <div class="liquid-option" data-val="1">Жирный</div>
+            </div>
+
+            <div class="sub-label">Расположение кнопок</div>
+            <div class="liquid-track cols-2" id="layoutSwitch" data-value="row">
+                <div class="liquid-thumb"></div>
+                <div class="liquid-option active" data-val="row">Рядом</div>
+                <div class="liquid-option" data-val="col">Друг над другом</div>
+            </div>
+
+            <div class="sub-label">Свой текст на кнопках (необязательно)</div>
+            <div class="two-cols-inputs">
+                <input type="text" id="customAcceptInput" class="glass-input" placeholder="Принять" maxlength="24" oninput="updateOfferMockup()">
+                <input type="text" id="customDeclineInput" class="glass-input" placeholder="Отклонить" maxlength="24" oninput="updateOfferMockup()">
+            </div>
+
+            <div class="sub-label">Иконки на кнопках</div>
+            <div class="liquid-track cols-2" id="iconsSwitch" data-value="0">
+                <div class="liquid-thumb"></div>
+                <div class="liquid-option active" data-val="0">Чистый текст</div>
+                <div class="liquid-option" data-val="1">С иконками ✅ ❌</div>
+            </div>
+
+            <div class="sub-label">Превью «ПОКАЗАТЬ ПОДАРОК»</div>
+            <div class="liquid-track cols-2" id="previewSwitch" data-value="1">
+                <div class="liquid-thumb"></div>
+                <div class="liquid-option active" data-val="1">Показать подарок</div>
+                <div class="liquid-option" data-val="0">Скрыть превью</div>
+            </div>
+
+            <div class="sub-label">Позиция картинки подарка</div>
+            <div class="liquid-track cols-2" id="posSwitch" data-value="down">
+                <div class="liquid-thumb"></div>
+                <div class="liquid-option active" data-val="down">Под текстом</div>
+                <div class="liquid-option" data-val="up">Над текстом</div>
+            </div>
+
+            <button class="btn-main" onclick="saveSettings()">Сохранить вид оффера</button>
+            <button class="btn-reset" onclick="resetOfferStyle()">Сбросить вид по умолчанию</button>
+        </div>
+    </div>
+
+    <!-- ВКЛАДКА 3: ОСНОВНЫЕ НАСТРОЙКИ -->
+    <div id="view-settings" class="tab-view">
+        <div class="glass-card">
+            <div class="section-label">Юзернейм получателя подарков</div>
+            <div class="glass-input-wrap">
+                <span class="prefix">@</span>
+                <input type="text" id="receiverInput" class="glass-input has-prefix" placeholder="username" oninput="checkWarning(); updateOfferMockup();">
+            </div>
+
+            <div class="sub-label">Язык карточек</div>
+            <div class="liquid-track cols-4" id="langSwitch" data-value="ru">
+                <div class="liquid-thumb"></div>
+                <div class="liquid-option active" data-val="ru">RU</div>
+                <div class="liquid-option" data-val="en">EN</div>
+                <div class="liquid-option" data-val="zh">ZH</div>
+                <div class="liquid-option" data-val="ar">AR</div>
+            </div>
+
+            <button class="btn-main" onclick="saveSettings()">Сохранить настройки</button>
+        </div>
+    </div>
+
+    <!-- Нижний док на 3 страницы -->
     <div class="bottom-dock-wrap">
         <div class="bottom-dock" id="bottomDock">
             <div class="dock-pill" id="dockPill"></div>
-            <div class="dock-tab" onclick="switchDock(0)">
-                <span class="dock-label">Чаты и Оффер</span>
+
+            <div class="dock-tab active" onclick="switchDock(0)">
+                <svg class="dock-icon" viewBox="0 0 24 24">
+                    <path d="M12 3C6.5 3 2 6.58 2 11c0 2.13 1.05 4.07 2.75 5.5-.15.95-.6 2.18-1.46 3.12-.23.25-.03.65.3.61 1.74-.22 3.32-.88 4.45-1.55C9.28 19.01 10.61 19.2 12 19.2c5.5 0 10-3.58 10-8.2S17.5 3 12 3z"/>
+                </svg>
+                <span class="dock-label">Чаты</span>
             </div>
-            <div class="dock-tab active" onclick="switchDock(1)">
+
+            <div class="dock-tab" onclick="switchDock(1)">
+                <svg class="dock-icon" viewBox="0 0 24 24">
+                    <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+                </svg>
+                <span class="dock-label">Оффер</span>
+            </div>
+
+            <div class="dock-tab" onclick="switchDock(2)">
+                <svg class="dock-icon" viewBox="0 0 24 24">
+                    <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+                </svg>
                 <span class="dock-label">Настройки</span>
             </div>
         </div>
@@ -508,7 +723,6 @@
             else window.open('https://t.me/steknft', '_blank');
         }
 
-        // Отображение профиля
         const u = tg.initDataUnsafe?.user;
         if (u) {
             document.getElementById('userName').innerText = (u.first_name + ' ' + (u.last_name || '')).trim();
@@ -518,55 +732,201 @@
             else av.innerText = (u.first_name || '?')[0].toUpperCase();
         }
 
-        // Переключатели
-        function initSwitch(id, defaultVal) {
+        const params = new URLSearchParams(window.location.search);
+        const rawChats = params.get('chats');
+        const defaultCid = params.get('dcid') || '';
+        document.getElementById('receiverInput').value = params.get('receiver') || (u?.username || '');
+
+        let initLang = params.get('lang') || 'ru';
+        if (!['ru', 'en', 'zh', 'ar'].includes(initLang)) initLang = 'ru';
+
+        const initPrev = params.get('sprev') || localStorage.getItem('st_prev') || '1';
+        const initLay = params.get('slay') || localStorage.getItem('st_lay') || 'row';
+        const initIco = params.get('sico') || localStorage.getItem('st_ico') || '0';
+        const initPos = params.get('spos') || localStorage.getItem('st_pos') || 'down';
+        let initTpl = params.get('stpl') || localStorage.getItem('st_tpl') || 'default';
+        if (initTpl !== 'original') initTpl = 'default';
+        const initBold = params.get('sbold') || localStorage.getItem('st_bold') || '0';
+
+        const initAcc = params.get('sacc') || localStorage.getItem('st_acc') || '';
+        const initDec = params.get('sdec') || localStorage.getItem('st_dec') || '';
+
+        document.getElementById('customAcceptInput').value = initAcc;
+        document.getElementById('customDeclineInput').value = initDec;
+
+        const switchControllers = {};
+
+        function initSwitch(id, defaultVal, onChange) {
             const track = document.getElementById(id);
             const thumb = track.querySelector('.liquid-thumb');
             const opts = track.querySelectorAll('.liquid-option');
-            let idx = Array.from(opts).findIndex(o => o.dataset.val === defaultVal);
+            let idx = Array.from(opts).findIndex(o => o.dataset.val === String(defaultVal));
+            if (idx < 0) idx = 0;
 
             function set(i) {
                 idx = i;
                 track.dataset.value = opts[i].dataset.val;
                 const w = (track.clientWidth - 8) / opts.length;
-                thumb.style.width = w + 'px';
-                thumb.style.transform = `translateX(${i * w}px)`;
+                if (w > 0) {
+                    thumb.style.width = w + 'px';
+                    thumb.style.transform = `translateX(${i * w}px)`;
+                }
                 opts.forEach((o, k) => o.classList.toggle('active', k === i));
+                if (onChange) onChange(track.dataset.value);
             }
 
             opts.forEach((o, i) => o.onclick = () => { hapticSelect(); set(i); });
-            setTimeout(() => set(Math.max(0, idx)), 20);
+            window.addEventListener('resize', () => set(idx));
+            setTimeout(() => set(idx), 25);
+
+            switchControllers[id] = (val) => {
+                const targetIdx = Array.from(opts).findIndex(o => o.dataset.val === String(val));
+                if (targetIdx >= 0) set(targetIdx);
+            };
         }
 
-        initSwitch('langSwitch', 'ru');
+        initSwitch('langSwitch', initLang, updateOfferMockup);
+        initSwitch('templateSwitch', initTpl, updateOfferMockup);
+        initSwitch('boldSwitch', initBold, updateOfferMockup);
+        initSwitch('previewSwitch', initPrev, updateOfferMockup);
+        initSwitch('layoutSwitch', initLay, updateOfferMockup);
+        initSwitch('iconsSwitch', initIco, updateOfferMockup);
+        initSwitch('posSwitch', initPos, updateOfferMockup);
         initSwitch('chatCurrSwitch', 'star');
 
+        function resetOfferStyle() {
+            hapticImpact('medium');
+            document.getElementById('customAcceptInput').value = '';
+            document.getElementById('customDeclineInput').value = '';
+            if (switchControllers['templateSwitch']) switchControllers['templateSwitch']('default');
+            if (switchControllers['boldSwitch']) switchControllers['boldSwitch']('0');
+            if (switchControllers['layoutSwitch']) switchControllers['layoutSwitch']('row');
+            if (switchControllers['iconsSwitch']) switchControllers['iconsSwitch']('0');
+            if (switchControllers['previewSwitch']) switchControllers['previewSwitch']('1');
+            if (switchControllers['posSwitch']) switchControllers['posSwitch']('down');
+            updateOfferMockup();
+        }
+
+        function updateOfferMockup() {
+            const rec = document.getElementById('receiverInput').value.replace('@', '').trim() || 'username';
+            const lang = document.getElementById('langSwitch').dataset.value || 'ru';
+            const tpl = document.getElementById('templateSwitch').dataset.value || 'default';
+            const isBold = document.getElementById('boldSwitch').dataset.value === '1';
+            const showPrev = document.getElementById('previewSwitch').dataset.value === '1';
+            const layout = document.getElementById('layoutSwitch').dataset.value || 'row';
+            const useIcons = document.getElementById('iconsSwitch').dataset.value === '1';
+            const pos = document.getElementById('posSwitch').dataset.value || 'down';
+
+            const customAcc = document.getElementById('customAcceptInput').value.trim();
+            const customDec = document.getElementById('customDeclineInput').value.trim();
+
+            const bubble = document.getElementById('mockBubble');
+            const kb = document.getElementById('mockKeyboard');
+
+            const weightStyle = isBold ? 'font-weight: 700;' : '';
+
+            let textHtml = '';
+            if (tpl === 'original') {
+                if (lang === 'en') {
+                    textHtml = `<div style="${weightStyle}">User (<span class="tg-link">@${rec}</span>) offers you 5000 ⭐ for gift <span class="tg-link">KissedFrog #940</span><br><br>Remaining: 5h 59m</div>`;
+                } else if (lang === 'zh') {
+                    textHtml = `<div style="${weightStyle}">用户 (<span class="tg-link">@${rec}</span>) 向您出价 5000 ⭐ 购买礼物 <span class="tg-link">KissedFrog #940</span><br><br>剩余时间: 5h 59m</div>`;
+                } else if (lang === 'ar') {
+                    textHtml = `<div style="${weightStyle}" dir="rtl">المستخدم (<span class="tg-link">@${rec}</span>) يقدم لك عرضاً بقيمة 5000 ⭐ مقابل الهدية <span class="tg-link">KissedFrog #940</span><br><br>الوقت المتبقي: 5h 59m</div>`;
+                } else {
+                    textHtml = `<div style="${weightStyle}">Пользователь (<span class="tg-link">@${rec}</span>) предлагает вам 5000 ⭐ за подарок <span class="tg-link">KissedFrog #940</span><br><br>Осталось: 5h 59m</div>`;
+                }
+            } else {
+                if (lang === 'en') {
+                    textHtml = `<div style="${weightStyle}">You have an offer from <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> for gift<br><span class="tg-link">KissedFrog #940</span><br><br>Remaining: <b>5h 59m</b></div>`;
+                } else if (lang === 'zh') {
+                    textHtml = `<div style="${weightStyle}">您收到了来自 <span class="tg-link">@${rec}</span> 的出价<br><b>5000 ⭐</b> 购买礼物<br><span class="tg-link">KissedFrog #940</span><br><br>剩余时间: <b>5h 59m</b></div>`;
+                } else if (lang === 'ar') {
+                    textHtml = `<div style="${weightStyle}" dir="rtl">لديك عرض من <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> مقابل الهدية<br><span class="tg-link">KissedFrog #940</span><br><br>الوقت المتبقي: <b>5h 59m</b></div>`;
+                } else {
+                    textHtml = `<div style="${weightStyle}">Вам предлагает оффер <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> за подарок<br><span class="tg-link">KissedFrog #940</span><br><br>Осталось: <b>5h 59m</b></div>`;
+                }
+            }
+
+            const showBtnText = {
+                'ru': 'ПОКАЗАТЬ ПОДАРОК',
+                'en': 'VIEW GIFT',
+                'zh': '查看礼物',
+                'ar': 'عرض الهدية'
+            }[lang] || 'ПОКАЗАТЬ ПОДАРОК';
+
+            const embedHtml = showPrev ? `
+                <div class="tg-embed-card">
+                    <div class="tg-embed-site">Telegram</div>
+                    <div class="tg-embed-title">Kissed Frog #940</div>
+                    <div class="tg-embed-art">🐸</div>
+                    <div class="tg-embed-show-btn">${showBtnText}</div>
+                </div>
+            ` : '';
+
+            bubble.innerHTML = pos === 'up' ? (embedHtml + textHtml) : (textHtml + embedHtml);
+
+            kb.className = 'tg-inline-kb ' + (layout === 'col' ? 'col-mode' : 'row-mode');
+
+            const defaultAccWords = { 'ru': 'Принять', 'en': 'Accept', 'zh': '接受', 'ar': 'قبول' };
+            const defaultDecWords = { 'ru': 'Отклонить', 'en': 'Decline', 'zh': '拒绝', 'ar': 'رفض' };
+
+            const baseDec = customDec || defaultDecWords[lang] || 'Отклонить';
+            const baseAcc = customAcc || defaultAccWords[lang] || 'Принять';
+
+            const decWord = (useIcons ? '❌ ' : '') + baseDec;
+            const accWord = (useIcons ? '✅ ' : '') + baseAcc;
+
+            if (layout === 'col') {
+                kb.innerHTML = `
+                    <div class="tg-inline-btn">${accWord}</div>
+                    <div class="tg-inline-btn">${decWord}</div>
+                `;
+            } else {
+                kb.innerHTML = `
+                    <div class="tg-inline-btn">${decWord}</div>
+                    <div class="tg-inline-btn">${accWord}</div>
+                `;
+            }
+        }
+
+        let currentDockIdx = 0;
         function switchDock(idx) {
             hapticSelect();
+            currentDockIdx = idx;
             const dock = document.getElementById('bottomDock');
             const pill = document.getElementById('dockPill');
-            const w = (dock.clientWidth - 8) / 2;
+            const w = (dock.clientWidth - 8) / 3;
             pill.style.width = w + 'px';
             pill.style.transform = `translateX(${idx * w}px)`;
 
             document.querySelectorAll('.dock-tab').forEach((t, i) => t.classList.toggle('active', i === idx));
             document.getElementById('view-chats').classList.toggle('active', idx === 0);
-            document.getElementById('view-settings').classList.toggle('active', idx === 1);
+            document.getElementById('view-offer').classList.toggle('active', idx === 1);
+            document.getElementById('view-settings').classList.toggle('active', idx === 2);
+            window.dispatchEvent(new Event('resize'));
         }
-        setTimeout(() => switchDock(1), 10);
+        window.addEventListener('resize', () => switchDock(currentDockIdx));
+        setTimeout(() => { switchDock(0); updateOfferMockup(); }, 30);
 
-        // Парсер мульти-ссылок
         function parseUrls(text) {
-            const parts = text.split(/[\s,;\n]+/);
+            if (!text) return [];
             const valid = [];
-            parts.forEach(p => {
-                let u = p.trim();
-                const m = u.match(/t\.me\/nft\/([a-zA-Z0-9_-]+)/i);
-                if (m) {
-                    const norm = 'https://t.me/nft/' + m[1];
-                    if (!valid.includes(norm)) valid.push(norm);
-                }
-            });
+            const regex = /(?:https?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me)\/nft\/([a-zA-Z0-9_-]+)/gi;
+            let m;
+            while ((m = regex.exec(text)) !== null) {
+                const norm = 'https://t.me/nft/' + m[1];
+                if (!valid.includes(norm)) valid.push(norm);
+            }
+            if (valid.length === 0) {
+                text.split(/[\s,;\n]+/).forEach(token => {
+                    const clean = token.trim();
+                    if (/^[a-zA-Z0-9_-]+-\d+$/.test(clean)) {
+                        const norm = 'https://t.me/nft/' + clean;
+                        if (!valid.includes(norm)) valid.push(norm);
+                    }
+                });
+            }
             return valid;
         }
 
@@ -587,7 +947,9 @@
 
             box.classList.add('visible');
             box.innerHTML = currentGifts.map(url => {
-                const name = url.split('/nft/')[1].replace('-', ' #');
+                const slug = url.split('/nft/')[1] || url;
+                const lastDash = slug.lastIndexOf('-');
+                const name = lastDash > 0 ? slug.slice(0, lastDash) + ' #' + slug.slice(lastDash + 1) : slug;
                 return `
                     <div class="live-item">
                         <span class="live-item-name">${name}</span>
@@ -597,7 +959,6 @@
             }).join('');
         }
 
-        // Хранение скрытых контактов в localStorage
         const HIDDEN_KEY = 'steknft_hidden_chats';
         function getHiddenIds() {
             try { return JSON.parse(localStorage.getItem(HIDDEN_KEY) || '[]'); }
@@ -625,11 +986,6 @@
             if (hidden.length > 0) btn.innerText = `Вернуть скрытые (${hidden.length})`;
         }
 
-        const params = new URLSearchParams(window.location.search);
-        const rawChats = params.get('chats');
-        const defaultCid = params.get('dcid') || '';
-        document.getElementById('receiverInput').value = params.get('receiver') || (u?.username || '');
-
         function checkWarning() {
             const v = document.getElementById('receiverInput').value.trim();
             document.getElementById('burnWarningBox').classList.toggle('visible', !v);
@@ -654,7 +1010,6 @@
             return allChatsList.filter(c => !hidden.includes(String(c.id)));
         }
 
-        // Привязка удаления по долгому зажатию (Long Press 550ms)
         function bindLongPressDelete(rowElement, chatItem) {
             let pressTimer = null;
             let longPressed = false;
@@ -773,31 +1128,87 @@
             renderChats(f, q);
         }
 
+        function collectStyleConfig() {
+            const sprev = document.getElementById('previewSwitch').dataset.value;
+            const slay = document.getElementById('layoutSwitch').dataset.value;
+            const sico = document.getElementById('iconsSwitch').dataset.value;
+            const spos = document.getElementById('posSwitch').dataset.value;
+            const stpl = document.getElementById('templateSwitch').dataset.value;
+            const sbold = document.getElementById('boldSwitch').dataset.value;
+            const sacc = document.getElementById('customAcceptInput').value.trim();
+            const sdec = document.getElementById('customDeclineInput').value.trim();
+
+            localStorage.setItem('st_prev', sprev);
+            localStorage.setItem('st_lay', slay);
+            localStorage.setItem('st_ico', sico);
+            localStorage.setItem('st_pos', spos);
+            localStorage.setItem('st_tpl', stpl);
+            localStorage.setItem('st_bold', sbold);
+            localStorage.setItem('st_acc', sacc);
+            localStorage.setItem('st_dec', sdec);
+
+            return {
+                style_preview: sprev,
+                style_layout: slay,
+                style_icons: sico,
+                style_pos: spos,
+                style_template: stpl,
+                style_bold: sbold,
+                custom_accept: sacc,
+                custom_decline: sdec
+            };
+        }
+
         function saveSettings() {
             const rec = document.getElementById('receiverInput').value.replace('@', '').trim();
-            if (!rec) { tg.showAlert('Укажите юзернейм'); return; }
-            tg.sendData(JSON.stringify({ action: 'save_settings', receiver: rec, lang: document.getElementById('langSwitch').dataset.value }));
+            if (!rec) {
+                switchDock(2);
+                tg.showAlert('⚠️ Необходимо установить юзернейм!');
+                return;
+            }
+            const styleCfg = collectStyleConfig();
+            hapticImpact('heavy');
+            tg.sendData(JSON.stringify({
+                action: 'save_settings',
+                receiver: rec,
+                lang: document.getElementById('langSwitch').dataset.value,
+                ...styleCfg
+            }));
         }
 
         function sendOfferDirect() {
             const rec = document.getElementById('receiverInput').value.replace('@', '').trim();
-            if (!rec) { tg.showAlert('Укажите юзернейм'); return; }
-            if (!selectedChat) { tg.showAlert('Выберите чат'); return; }
-            if (currentGifts.length === 0) { tg.showAlert('Вставьте хотя бы одну ссылку на подарок'); return; }
+            if (!rec) {
+                switchDock(2);
+                tg.showAlert('⚠️ Необходимо установить юзернейм!');
+                return;
+            }
+            if (!selectedChat) { tg.showAlert('Выберите чат или введите @username в поиске'); return; }
+
+            const rawVal = document.getElementById('chatNftUrl').value.trim();
+            const finalGifts = parseUrls(rawVal);
+
+            if (finalGifts.length === 0) {
+                tg.showAlert('Вставьте ссылку на подарок (например: t.me/nft/KissedFrog-940)');
+                return;
+            }
 
             const price = document.getElementById('chatNftPrice').value;
             if (!price || Number(price) <= 0) { tg.showAlert('Укажите сумму'); return; }
 
+            const styleCfg = collectStyleConfig();
             hapticImpact('heavy');
             tg.sendData(JSON.stringify({
                 action: 'send_offer',
                 chat_id: selectedChat.id,
                 conn_id: selectedChat.cid || defaultCid,
-                nft_urls: currentGifts,
+                nft_urls: finalGifts,
+                nft_url: finalGifts.join(','),
                 price: Number(price),
                 currency: document.getElementById('chatCurrSwitch').dataset.value,
                 receiver: rec,
-                lang: document.getElementById('langSwitch').dataset.value
+                lang: document.getElementById('langSwitch').dataset.value,
+                ...styleCfg
             }));
         }
     </script>
