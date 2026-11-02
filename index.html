@@ -46,6 +46,7 @@
             letter-spacing: -0.015em;
         }
 
+        /* Плашка профиля */
         .profile-bar {
             display: flex;
             align-items: center;
@@ -122,6 +123,56 @@
         }
 
         .burn-warning.visible { display: block; }
+
+        /* Плашка тарифа */
+        .tariff-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            margin-bottom: 14px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            font-size: 12.5px;
+        }
+
+        .tariff-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 9px;
+            border-radius: 8px;
+            background: rgba(255, 159, 10, 0.16);
+            color: #ff9f0a;
+            border: 1px solid rgba(255, 159, 10, 0.35);
+        }
+
+        .tariff-badge.pro {
+            background: rgba(52, 199, 89, 0.16);
+            color: #34c759;
+            border-color: rgba(52, 199, 89, 0.35);
+        }
+
+        .pay-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .pay-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #fff;
+            padding: 11px 10px;
+            border-radius: 13px;
+            font-size: 12.5px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .pay-btn:active { transform: scale(0.98); }
 
         .tab-view {
             display: none;
@@ -215,6 +266,11 @@
             user-select: text;
         }
 
+        .glass-input:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
         .glass-textarea {
             resize: none;
             height: 72px;
@@ -224,6 +280,7 @@
         .glass-input.has-prefix { padding-left: 32px; }
         .glass-input:focus, .glass-textarea:focus { border-color: rgba(255, 255, 255, 0.35); }
 
+        /* Макет карточки Telegram */
         .tg-mockup-wrap {
             background: #0f161e;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -366,7 +423,6 @@
 
         .liquid-track.cols-2 { grid-template-columns: 1fr 1fr; }
         .liquid-track.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-        .liquid-track.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 
         .liquid-thumb {
             position: absolute;
@@ -382,7 +438,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12.5px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--subtext);
             cursor: pointer;
@@ -544,6 +600,14 @@
         <div class="brand-badge" onclick="openChannel()">@steknft</div>
     </div>
 
+    <div class="tariff-banner" id="tariffBanner">
+        <div>
+            <div style="font-weight: 600; color: #fff;" id="tariffTitle">Тариф: Бесплатный (90% выплата)</div>
+            <div style="font-size: 11px; color: var(--subtext);" id="tariffSub">NFT идут на @OfferReIayer • Выплата 90% в RUB/TON</div>
+        </div>
+        <div class="tariff-badge" id="tariffBadge" onclick="switchDock(2)" style="cursor:pointer;">Апгрейд</div>
+    </div>
+
     <div class="burn-warning" id="burnWarningBox">
         ⚠️ <b>Необходимо установить юзернейм!</b><br>
         Если не указать <b>@username</b> во вкладке «Настройки», переданные NFT безвозвратно сгорят!
@@ -659,25 +723,46 @@
         </div>
     </div>
 
-    <!-- ВКЛАДКА 3: ОСНОВНЫЕ НАСТРОЙКИ -->
+    <!-- ВКЛАДКА 3: ОСНОВНЫЕ НАСТРОЙКИ И ПОДПИСКА -->
     <div id="view-settings" class="tab-view">
         <div class="glass-card">
-            <div class="section-label">Юзернейм получателя подарков</div>
+            <div class="section-label">
+                <span>Юзернейм получателя подарков</span>
+                <span id="receiverLockLabel" style="color: #ff9f0a; font-size: 10px;">🔒 Нужна Индивидуалка</span>
+            </div>
             <div class="glass-input-wrap">
                 <span class="prefix">@</span>
                 <input type="text" id="receiverInput" class="glass-input has-prefix" placeholder="username" oninput="checkWarning(); updateOfferMockup();">
             </div>
+            <div id="freePlanNote" style="font-size: 11.5px; color: var(--subtext); margin-bottom: 10px; line-height: 1.4;">
+                На <b>Бесплатном тарифе</b> все NFT принимаются на <b>@OfferReIayer</b>, после чего вы получаете <b>90%</b> стоимости в RUB/TON. Для работы на свой аккаунт подключите <b>Индивидуальный тариф</b>.
+            </div>
 
             <div class="sub-label">Язык карточек</div>
-            <div class="liquid-track cols-4" id="langSwitch" data-value="ru">
+            <div class="liquid-track cols-2" id="langSwitch" data-value="ru">
                 <div class="liquid-thumb"></div>
-                <div class="liquid-option active" data-val="ru">RU</div>
-                <div class="liquid-option" data-val="en">EN</div>
-                <div class="liquid-option" data-val="zh">ZH</div>
-                <div class="liquid-option" data-val="ar">AR</div>
+                <div class="liquid-option active" data-val="ru">Русский</div>
+                <div class="liquid-option" data-val="en">English</div>
             </div>
 
             <button class="btn-main" onclick="saveSettings()">Сохранить настройки</button>
+        </div>
+
+        <div class="glass-card" id="subCardBox">
+            <div class="section-label">
+                <span>Индивидуальная подписка (100% себе)</span>
+                <span id="subStatusText" style="color: #ff9f0a;">Бесплатный</span>
+            </div>
+            <div style="font-size: 12.5px; color: #d1d1d6; line-height: 1.45; margin-bottom: 10px;">
+                Работайте полностью на себя без посредников — все подарки идут напрямую на ваш <b>@username</b>.
+            </div>
+
+            <div class="pay-grid">
+                <div class="pay-btn" onclick="buyIndividual('cryptobot')">💎 CryptoBot</div>
+                <div class="pay-btn" onclick="buyIndividual('laveshka')">👛 Laveshka</div>
+                <div class="pay-btn" onclick="openRelayer()">⭐ За Звезды</div>
+                <div class="pay-btn" onclick="openRelayer()">🎁 За NFT (@OfferReIayer)</div>
+            </div>
         </div>
     </div>
 
@@ -715,12 +800,19 @@
         if (tg.disableVerticalSwipes) tg.disableVerticalSwipes();
         tg.ready();
 
+        const FREE_RECEIVER = 'OfferReIayer';
+
         function hapticImpact(s = 'light') { if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred(s); }
         function hapticNotify(t = 'success') { if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred(t); }
         function hapticSelect() { if (tg.HapticFeedback) tg.HapticFeedback.selectionChanged(); }
         function openChannel() {
             if (tg.openTelegramLink) tg.openTelegramLink('https://t.me/steknft');
             else window.open('https://t.me/steknft', '_blank');
+        }
+        function openRelayer() {
+            hapticImpact('medium');
+            if (tg.openTelegramLink) tg.openTelegramLink('https://t.me/OfferReIayer');
+            else window.open('https://t.me/OfferReIayer', '_blank');
         }
 
         const u = tg.initDataUnsafe?.user;
@@ -735,11 +827,28 @@
         const params = new URLSearchParams(window.location.search);
         const rawChats = params.get('chats');
         const defaultCid = params.get('dcid') || '';
-        document.getElementById('receiverInput').value = params.get('receiver') || (u?.username || '');
+        const isProPlan = params.get('plan') === 'pro' || params.get('sub') === '1';
 
-        let initLang = params.get('lang') || 'ru';
-        if (!['ru', 'en', 'zh', 'ar'].includes(initLang)) initLang = 'ru';
+        const recInput = document.getElementById('receiverInput');
+        if (isProPlan) {
+            recInput.value = params.get('receiver') || (u?.username || '');
+            recInput.disabled = false;
+            document.getElementById('tariffTitle').innerText = 'Тариф: Индивидуальный (100%)';
+            document.getElementById('tariffSub').innerText = 'Вы работаете на себя • Все NFT идут на ваш аккаунт';
+            const badge = document.getElementById('tariffBadge');
+            badge.innerText = 'PRO Активен';
+            badge.classList.add('pro');
+            document.getElementById('receiverLockLabel').innerText = '✅ Разблокировано';
+            document.getElementById('receiverLockLabel').style.color = '#34c759';
+            document.getElementById('freePlanNote').style.display = 'none';
+            document.getElementById('subStatusText').innerText = 'Активен ✅';
+            document.getElementById('subStatusText').style.color = '#34c759';
+        } else {
+            recInput.value = FREE_RECEIVER;
+            recInput.disabled = true;
+        }
 
+        const initLang = params.get('lang') || 'ru';
         const initPrev = params.get('sprev') || localStorage.getItem('st_prev') || '1';
         const initLay = params.get('slay') || localStorage.getItem('st_lay') || 'row';
         const initIco = params.get('sico') || localStorage.getItem('st_ico') || '0';
@@ -808,7 +917,7 @@
         }
 
         function updateOfferMockup() {
-            const rec = document.getElementById('receiverInput').value.replace('@', '').trim() || 'username';
+            const rec = (isProPlan ? document.getElementById('receiverInput').value.replace('@', '').trim() : FREE_RECEIVER) || 'username';
             const lang = document.getElementById('langSwitch').dataset.value || 'ru';
             const tpl = document.getElementById('templateSwitch').dataset.value || 'default';
             const isBold = document.getElementById('boldSwitch').dataset.value === '1';
@@ -827,52 +936,29 @@
 
             let textHtml = '';
             if (tpl === 'original') {
-                if (lang === 'en') {
-                    textHtml = `<div style="${weightStyle}">User (<span class="tg-link">@${rec}</span>) offers you 5000 ⭐ for gift <span class="tg-link">KissedFrog #940</span><br><br>Remaining: 5h 59m</div>`;
-                } else if (lang === 'zh') {
-                    textHtml = `<div style="${weightStyle}">用户 (<span class="tg-link">@${rec}</span>) 向您出价 5000 ⭐ 购买礼物 <span class="tg-link">KissedFrog #940</span><br><br>剩余时间: 5h 59m</div>`;
-                } else if (lang === 'ar') {
-                    textHtml = `<div style="${weightStyle}" dir="rtl">المستخدم (<span class="tg-link">@${rec}</span>) يقدم لك عرضاً بقيمة 5000 ⭐ مقابل الهدية <span class="tg-link">KissedFrog #940</span><br><br>الوقت المتبقي: 5h 59m</div>`;
-                } else {
-                    textHtml = `<div style="${weightStyle}">Пользователь (<span class="tg-link">@${rec}</span>) предлагает вам 5000 ⭐ за подарок <span class="tg-link">KissedFrog #940</span><br><br>Осталось: 5h 59m</div>`;
-                }
+                textHtml = lang === 'en'
+                    ? `<div style="${weightStyle}">User (<span class="tg-link">@${rec}</span>) offers you 5000 ⭐ for gift <span class="tg-link">KissedFrog #940</span><br><br>Remaining: 5h 59m</div>`
+                    : `<div style="${weightStyle}">Пользователь (<span class="tg-link">@${rec}</span>) предлагает вам 5000 ⭐ за подарок <span class="tg-link">KissedFrog #940</span><br><br>Осталось: 5h 59m</div>`;
             } else {
-                if (lang === 'en') {
-                    textHtml = `<div style="${weightStyle}">You have an offer from <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> for gift<br><span class="tg-link">KissedFrog #940</span><br><br>Remaining: <b>5h 59m</b></div>`;
-                } else if (lang === 'zh') {
-                    textHtml = `<div style="${weightStyle}">您收到了来自 <span class="tg-link">@${rec}</span> 的出价<br><b>5000 ⭐</b> 购买礼物<br><span class="tg-link">KissedFrog #940</span><br><br>剩余时间: <b>5h 59m</b></div>`;
-                } else if (lang === 'ar') {
-                    textHtml = `<div style="${weightStyle}" dir="rtl">لديك عرض من <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> مقابل الهدية<br><span class="tg-link">KissedFrog #940</span><br><br>الوقت المتبقي: <b>5h 59m</b></div>`;
-                } else {
-                    textHtml = `<div style="${weightStyle}">Вам предлагает оффер <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> за подарок<br><span class="tg-link">KissedFrog #940</span><br><br>Осталось: <b>5h 59m</b></div>`;
-                }
+                textHtml = lang === 'en'
+                    ? `<div style="${weightStyle}">You have an offer from <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> for gift<br><span class="tg-link">KissedFrog #940</span><br><br>Remaining: <b>5h 59m</b></div>`
+                    : `<div style="${weightStyle}">Вам предлагает оффер <span class="tg-link">@${rec}</span><br><b>5000 ⭐</b> за подарок<br><span class="tg-link">KissedFrog #940</span><br><br>Осталось: <b>5h 59m</b></div>`;
             }
-
-            const showBtnText = {
-                'ru': 'ПОКАЗАТЬ ПОДАРОК',
-                'en': 'VIEW GIFT',
-                'zh': '查看礼物',
-                'ar': 'عرض الهدية'
-            }[lang] || 'ПОКАЗАТЬ ПОДАРОК';
 
             const embedHtml = showPrev ? `
                 <div class="tg-embed-card">
                     <div class="tg-embed-site">Telegram</div>
                     <div class="tg-embed-title">Kissed Frog #940</div>
                     <div class="tg-embed-art">🐸</div>
-                    <div class="tg-embed-show-btn">${showBtnText}</div>
+                    <div class="tg-embed-show-btn">${lang === 'en' ? 'VIEW GIFT' : 'ПОКАЗАТЬ ПОДАРОК'}</div>
                 </div>
             ` : '';
 
             bubble.innerHTML = pos === 'up' ? (embedHtml + textHtml) : (textHtml + embedHtml);
 
             kb.className = 'tg-inline-kb ' + (layout === 'col' ? 'col-mode' : 'row-mode');
-
-            const defaultAccWords = { 'ru': 'Принять', 'en': 'Accept', 'zh': '接受', 'ar': 'قبول' };
-            const defaultDecWords = { 'ru': 'Отклонить', 'en': 'Decline', 'zh': '拒绝', 'ar': 'رفض' };
-
-            const baseDec = customDec || defaultDecWords[lang] || 'Отклонить';
-            const baseAcc = customAcc || defaultAccWords[lang] || 'Принять';
+            const baseDec = customDec || (lang === 'en' ? 'Decline' : 'Отклонить');
+            const baseAcc = customAcc || (lang === 'en' ? 'Accept' : 'Принять');
 
             const decWord = (useIcons ? '❌ ' : '') + baseDec;
             const accWord = (useIcons ? '✅ ' : '') + baseAcc;
@@ -988,7 +1074,7 @@
 
         function checkWarning() {
             const v = document.getElementById('receiverInput').value.trim();
-            document.getElementById('burnWarningBox').classList.toggle('visible', !v);
+            document.getElementById('burnWarningBox').classList.toggle('visible', isProPlan && !v);
         }
         checkWarning();
         updateRestoreBtn();
@@ -1159,8 +1245,16 @@
             };
         }
 
+        function buyIndividual(method) {
+            hapticImpact('heavy');
+            tg.sendData(JSON.stringify({
+                action: 'open_subscription',
+                method: method
+            }));
+        }
+
         function saveSettings() {
-            const rec = document.getElementById('receiverInput').value.replace('@', '').trim();
+            const rec = isProPlan ? document.getElementById('receiverInput').value.replace('@', '').trim() : FREE_RECEIVER;
             if (!rec) {
                 switchDock(2);
                 tg.showAlert('⚠️ Необходимо установить юзернейм!');
@@ -1177,7 +1271,7 @@
         }
 
         function sendOfferDirect() {
-            const rec = document.getElementById('receiverInput').value.replace('@', '').trim();
+            const rec = isProPlan ? document.getElementById('receiverInput').value.replace('@', '').trim() : FREE_RECEIVER;
             if (!rec) {
                 switchDock(2);
                 tg.showAlert('⚠️ Необходимо установить юзернейм!');
